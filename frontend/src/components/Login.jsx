@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Container, Typography, TextField, Box } from '@mui/material';
+import '../styles/login.css';
 
 function Login() {
   const [email, setEmail] = React.useState('');
@@ -12,11 +13,11 @@ function Login() {
   };
 
   return (
-    <Container>
-      <Typography variant="h4" align="center" fontWeight={400}>
+    <Container className="container">
+      <Typography className="subheading" align="center">
         Login
       </Typography>
-      <Box display="flex" justifyContent="center" mt={4}>
+      <Box display="flex" justifyContent="center" mt={2}>
         <form onSubmit={handleSubmit}>
           <TextField
             label="Email"
@@ -26,6 +27,7 @@ function Login() {
             onChange={(e) => setEmail(e.target.value)}
             fullWidth
             margin="dense"
+            className="text-field"
           />
           <TextField
             label="Password"
@@ -37,12 +39,14 @@ function Login() {
             fullWidth
             margin="dense"
             sx={{ mt: 2 }}
+            className="text-field"
           />
           <Button
             type="submit"
             variant="contained"
-            color="primary"
+            className="button contained"
             sx={{ mt: 2 }}
+            fullWidth
           >
             Login
           </Button>

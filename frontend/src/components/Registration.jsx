@@ -15,7 +15,7 @@ function Registration() {
   };
 
   return (
-    <Container>
+    <Container sx={{ mt: 6 }}>
       <Typography variant="h4" align="center" fontWeight={400}>
         Register
       </Typography>

@@ -1,0 +1,43 @@
+@import './colors.css';
+
+/* Global styles */
+html,
+body {
+  font-family: 'Open Sans', sans-serif;
+  background: linear-gradient(
+    to bottom,
+    var(--off-white-color),
+    var(--beige-color)
+  );
+  height: 100%;
+  margin: 0;
+}
+
+/* AppBar styles */
+.app-bar {
+  background-color: #2e865f;
+  color: #f7f7f7;
+}
+
+.global-header {
+  font-size: 32px;
+  font-weight: 700;
+  color: #f7f7f7;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.app-bar a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.app-bar.toolbar {
+  justify-content: center;
+}
+
+/* Routes container styles */
+.routes-container {
+  padding: 20px;
+  height: 100vh;
+}

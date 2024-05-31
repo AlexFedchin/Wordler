@@ -1,0 +1,54 @@
+@import './colors.css';
+
+.container {
+  max-width: 1200px;
+  margin: 24px auto;
+  padding: 24px;
+  background-color: transparent;
+  border-radius: 10px;
+  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+}
+
+.subheading {
+  font-size: 32px;
+  font-weight: 500;
+  color: var(--accent-color);
+  margin-bottom: 16px;
+}
+
+.typography {
+  font-size: 18px;
+  color: var(--off-black-color);
+  margin-bottom: 20px;
+}
+
+/* Common button styles */
+.button {
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 5px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.button.contained {
+  color: var(--off-white-color);
+  background-color: var(--accent-color);
+  border: none;
+}
+
+.button.contained:hover {
+  background-color: var(--darker-accent-color);
+}
+
+.button.outlined {
+  color: var(--accent-color);
+  background-color: transparent;
+  border: 1px solid var(--accent-color);
+}
+
+.button.outlined:hover {
+  background-color: var(--accent-color);
+  border: 1px solid var(--accent-color);
+  color: var(--off-white-color);
+}

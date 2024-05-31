@@ -1,7 +1,9 @@
+// Home.jsx
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, Button, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import '../styles/home.css';
 
 function Home() {
   const [data, setData] = useState(null);
@@ -21,11 +23,11 @@ function Home() {
 
   return (
     <Box>
-      <Container sx={{ mt: 6 }}>
-        <Typography variant="h4" align="center" fontWeight={400}>
+      <Container className="container">
+        <Typography className="subheading" align="center">
           What is Wordler?
         </Typography>
-        <Typography align="center" sx={{ mt: 2 }}>
+        <Typography align="center" className="typography">
           Wordler is an online language learning platform which helps you
           remember the words that you need. It is really simple: put in the
           words that you want to know and their translation and play games to
@@ -34,7 +36,7 @@ function Home() {
         <Box display="flex" justifyContent="center" my={4}>
           <Button
             variant="contained"
-            color="primary"
+            className="button contained"
             onClick={() => {
               navigate('/login');
               console.log('Login button pressed');
@@ -44,19 +46,19 @@ function Home() {
           </Button>
           <Button
             variant="outlined"
-            color="primary"
+            className="button outlined"
             onClick={() => {
               navigate('/register');
               console.log('Register button pressed');
             }}
-            sx={{ mx: 4 }}
+            sx={{ ml: 4 }}
           >
             Register
           </Button>
         </Box>
         {data && (
           <Box textAlign="center" mt={4}>
-            <Typography>{data.message}</Typography>
+            <Typography className="typography">{data.message}</Typography>
           </Box>
         )}
       </Container>
