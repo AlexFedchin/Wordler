@@ -1,31 +1,31 @@
-@import './colors.css';
+@import "./colors.css";
+@import "./fonts.css";
 
 .container {
-  max-width: 1200px;
-  margin: 24px auto;
+  max-width: 5000px;
   padding: 24px;
   background-color: transparent;
   border-radius: 10px;
-  /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
 }
 
 .subheading {
-  font-size: 32px;
+  font-size: 40px;
   font-weight: 500;
-  color: var(--accent-color);
+  color: var(--off-white-color);
+  font-family: "AccentFont";
   margin-bottom: 16px;
 }
 
 .typography {
-  font-size: 18px;
-  color: var(--off-black-color);
-  margin-bottom: 20px;
+  font-size: 24px;
+  color: var(--off-white-color);
+  font-family: "TextFont";
 }
 
-/* Common button styles */
 .button {
-  font-size: 16px;
-  font-weight: 500;
+  font-family: "ButtonFont";
+  font-size: 20px;
+  font-weight: 700;
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
@@ -51,4 +51,5 @@
   background-color: var(--accent-color);
   border: 1px solid var(--accent-color);
   color: var(--off-white-color);
+  box-shadow: 0 0 10px var(--accent-color);
 }

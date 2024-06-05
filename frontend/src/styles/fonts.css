@@ -1,0 +1,20 @@
+@font-face {
+  font-family: "AccentFont";
+  src: url("../../public/fonts/Industry-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "TextFont";
+  src: url("../../public/fonts/DolomanPavljenko.otf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "ButtonFont";
+  src: url("../../public/fonts/NTSomic-Medium.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
