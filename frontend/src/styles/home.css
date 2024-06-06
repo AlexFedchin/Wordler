@@ -22,6 +22,13 @@
   font-family: "TextFont";
 }
 
+.highlight {
+  font-size: 24px;
+  color: var(--accent-color);
+  font-family: "TextFont";
+  text-decoration: none;
+}
+
 .button {
   font-family: "ButtonFont";
   font-size: 20px;
@@ -29,16 +36,6 @@
   border-radius: 5px;
   padding: 10px 20px;
   cursor: pointer;
-}
-
-.button.contained {
-  color: var(--off-white-color);
-  background-color: var(--accent-color);
-  border: none;
-}
-
-.button.contained:hover {
-  background-color: var(--darker-accent-color);
 }
 
 .button.outlined {

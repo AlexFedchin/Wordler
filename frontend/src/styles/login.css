@@ -13,8 +13,8 @@
   font-weight: 500;
   color: var(--off-white-color);
   font-family: "AccentFont";
-  margin-bottom: 16px;
-  margin-top: 16px;
+  margin-bottom: 32px;
+  margin-top: 40px;
 }
 
 .typography {
@@ -23,10 +23,17 @@
   font-family: "TextFont";
 }
 
-.highlight {
+.clickable-highlight {
   font-size: 24px;
   color: var(--accent-color);
   font-family: "TextFont";
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.clickable-highlight:hover {
+  text-shadow: 0 0 10px var(--accent-color);
+  transition: text-shadow 0.3s ease;
 }
 
 .button {
@@ -45,6 +52,43 @@
 }
 
 .button.contained:hover {
-  background-color: var(--darker-accent-color);
-  box-shadow: 0 0 10px var(--darker-accent-color);
+  /* background-color: var(--darker-accent-color); */
+  box-shadow: 0 0 20px var(--accent-color);
+  transition: box-shadow 0.3s ease;
+}
+
+/* Default styles for text fields and labels */
+.text-field .MuiOutlinedInput-root {
+  border-color: var(--off-white-color);
+  transition: border-color 0.3s ease;
+}
+
+.text-field .MuiOutlinedInput-notchedOutline {
+  border-color: var(--off-white-color);
+}
+
+.text-field .MuiInputLabel-root {
+  color: var(--off-white-color);
+}
+
+/* Styles for hovered text fields */
+.text-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
+  border-color: var(--darker-accent-color);
+  transition: border-color 0.3s ease;
+}
+
+.text-field:hover .MuiInputLabel-root {
+  color: var(--darker-accent-color);
+}
+
+/* Styles for focused text fields and labels */
+.text-field
+  .MuiOutlinedInput-root.Mui-focused
+  .MuiOutlinedInput-notchedOutline {
+  border-color: var(--accent-color);
+  transition: border-color 0.3s ease;
+}
+
+.text-field .MuiInputLabel-root.Mui-focused {
+  color: var(--accent-color);
 }

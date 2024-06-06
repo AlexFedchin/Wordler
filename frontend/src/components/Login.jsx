@@ -1,33 +1,35 @@
 import React from "react";
 import { Button, Container, Typography, TextField, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
 // import "../styles/common.css";
 
 function Login() {
-  const [email, setEmail] = React.useState("");
+  const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // Handle login logic here
-    console.log(`Email: ${email}, Password: ${password}`);
+    console.log(`Nickname: ${nickname}, Password: ${password}`);
   };
 
   return (
     <Container className="container">
       <Typography className="subheading" align="center">
-        LOGIN
+        Login to your account to play
       </Typography>
       <Box display="flex" justifyContent="center" mt={2}>
         <form onSubmit={handleSubmit}>
           <TextField
-            label="Email"
+            label="Nickname"
             variant="outlined"
             size="small"
             fullWidth
             margin="dense"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
             className="text-field"
             InputProps={{
               classes: {
@@ -55,7 +57,7 @@ function Login() {
             type="submit"
             variant="contained"
             className="button contained"
-            sx={{ mt: 2 }}
+            sx={{ mt: 4 }}
             fullWidth
           >
             Login
@@ -67,13 +69,19 @@ function Login() {
               alignItems: "center",
               justifyContent: "center",
               mt: 2,
-              gap: 2,
+              gap: 1,
             }}
           >
             <Typography className="typography" align="center">
               Don't have an account?
             </Typography>
-            <Typography className="highlight" align="center">
+            <Typography
+              className="clickable-highlight"
+              align="center"
+              onClick={() => {
+                navigate("/register");
+              }}
+            >
               Register
             </Typography>
           </Box>
