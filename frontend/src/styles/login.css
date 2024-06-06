@@ -36,9 +36,15 @@
   transition: text-shadow 0.3s ease;
 }
 
+.error {
+  font-size: 24px;
+  color: var(--error-color);
+  font-family: "TextFont";
+}
+
 .button {
   font-family: "ButtonFont";
-  font-size: 20px;
+  font-size: larger;
   font-weight: 700;
   border-radius: 5px;
   padding: 10px 20px;
@@ -53,7 +59,7 @@
 
 .button.contained:hover {
   /* background-color: var(--darker-accent-color); */
-  box-shadow: 0 0 20px var(--accent-color);
+  box-shadow: 0 0 15px var(--accent-color);
   transition: box-shadow 0.3s ease;
 }
 
@@ -69,6 +75,8 @@
 
 .text-field .MuiInputLabel-root {
   color: var(--off-white-color);
+  font-family: "TextFont";
+  font-size: large;
 }
 
 /* Styles for hovered text fields */

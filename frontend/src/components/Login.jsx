@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Container, Typography, TextField, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import "../styles/login.css";
-// import "../styles/common.css";
+import axios from "axios";
 
 function Login() {
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const API_BASE_URL = "http://localhost:8000/api/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Handle login logic here
-    console.log(`Nickname: ${nickname}, Password: ${password}`);
+    // Fetch existing users
+    axios
+      .get(API_BASE_URL + "users/")
+      .then((response) => {
+        const existingUsers = response.data;
+        // Find user with matching nickname and password
+        const user = existingUsers.find(
+          (user) => user.nickname === nickname && user.password === password
+        );
+        if (user) {
+          // User found, assign currentUser to user data
+          // Here you can use the user data as needed
+          console.log("Logged in as:", user);
+          setError("");
+        } else {
+          // User not found, clear form data and show error message
+          setPassword("");
+          setError("Wrong nickname or password");
+        }
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setError("Something went wrong. Try again later.");
+      });
   };
 
   return (
@@ -53,6 +77,11 @@ function Login() {
               },
             }}
           />
+          {error && (
+            <Typography className="error" align="center" sx={{ mt: 4 }}>
+              {error}
+            </Typography>
+          )}
           <Button
             type="submit"
             variant="contained"
