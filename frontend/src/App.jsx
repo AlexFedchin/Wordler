@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Home from "./components/Home";
-import Login from "./components/Login";
-import Registration from "./components/Registration";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Registration from "./pages/Registration";
 import { Typography, Box, AppBar, Toolbar } from "@mui/material";
 import "./styles/app.css";
 
@@ -10,14 +10,51 @@ function App() {
   return (
     <Router>
       <Box>
-        <AppBar position="fixed" className="app-bar">
-          <Toolbar style={{ justifyContent: "center" }}>
-            <Link to="/">
-              <Typography className="global-header">WORDLER</Typography>
+        <AppBar
+          position="fixed"
+          sx={{
+            backgroundColor: "var(--black-color)",
+            borderRadius: "10px",
+            width: "98%",
+            left: "50%",
+            transform: "translateX(-50%)",
+            top: "24px",
+            position: "fixed",
+            zIndex: 1000,
+          }}
+        >
+          <Toolbar
+            sx={{
+              justifyContent: "center",
+            }}
+          >
+            <Link to="/" sx={{ textDecoration: "none", color: "inherit" }}>
+              <Typography
+                sx={{
+                  fontSize: "40px",
+                  fontWeight: 700,
+                  color: "var(--off-white-color)",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                  fontFamily: "AccentFont",
+                  textDecoration: "none",
+                }}
+              >
+                WORDLER
+              </Typography>
             </Link>
           </Toolbar>
         </AppBar>
-        <Box className="content" sx={{ mt: 12 }}>
+        <Box
+          sx={{
+            mt: 12,
+            maxWidth: "100%",
+            paddingLeft: "2%",
+            paddingRight: "2%",
+            alignContent: "center",
+            boxSizing: "border-box",
+          }}
+        >
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Registration />} />

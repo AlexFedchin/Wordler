@@ -8,8 +8,7 @@
   background-position: center;
 }
 
-/* AppBar styles */
-.app-bar {
+/* .app-bar {
   background-color: var(--black-color);
   border-radius: 10px;
   width: 98%;
@@ -38,11 +37,10 @@
   justify-content: center;
 }
 
-/* Main content styles */
 .content {
   max-width: 100%;
   padding-left: 2%;
   padding-right: 2%;
   align-content: center;
   box-sizing: border-box;
-}
+} */
