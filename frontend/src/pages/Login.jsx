@@ -1,5 +1,13 @@
 import React, { useState } from "react";
-import { Container, Typography, TextField, Box } from "@mui/material";
+import {
+  Container,
+  Typography,
+  TextField,
+  Box,
+  IconButton,
+  InputAdornment,
+} from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import FilledButton from "../components/FilledButton";
@@ -7,12 +15,15 @@ import FilledButton from "../components/FilledButton";
 function Login() {
   const [nickname, setNickname] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [showPassword, setShowPassword] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const API_BASE_URL = "http://localhost:8000/api/";
 
   const handleSubmit = (event) => {
     event.preventDefault();
+    setLoading(true);
     axios
       .get(API_BASE_URL + "users/")
       .then((response) => {
@@ -30,8 +41,17 @@ function Login() {
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        setPassword("");
+        setNickname("");
         setError("Something went wrong. Try again later.");
+      })
+      .finally(() => {
+        setLoading(false);
       });
+  };
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -43,10 +63,11 @@ function Login() {
 
         display: "flex",
         flexDirection: "column",
-        alignItems: "center", // Center the items vertically
-        justifyContent: "center", // Center the items horizontally
+        alignItems: "center",
+        justifyContent: "center",
       }}
     >
+      {/* Subheading of the section */}
       <Typography
         align="center"
         sx={{
@@ -60,8 +81,16 @@ function Login() {
       >
         Login to your account to play
       </Typography>
-      <Box maxWidth={"2000px"} mt={2} padding={2}>
+      {/* Box for the form */}
+      <Box
+        maxWidth={"2000px"}
+        mt={2}
+        padding={2}
+        minWidth={"500px"}
+        minHeight={"500px"}
+      >
         <form onSubmit={handleSubmit}>
+          {/* Nickname TextField */}
           <TextField
             label="Nickname"
             variant="outlined"
@@ -103,8 +132,15 @@ function Login() {
                 fontFamily: "TextFont",
                 fontSize: "large",
               },
+              // Autofill background color fix
+              "&:-webkit-autofill": {
+                "-webkit-box-shadow":
+                  "0 0 0 100px transparent inset !important",
+                "-webkit-text-fill-color": "var(--off-white-color) !important",
+              },
             }}
           />
+          {/* Password TextField */}
           <TextField
             label="Password"
             variant="outlined"
@@ -113,12 +149,29 @@ function Login() {
             margin="dense"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            type="password"
+            type={showPassword ? "text" : "password"}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    edge="end"
+                    sx={{
+                      color: showPassword
+                        ? "var(--accent-color)"
+                        : "var(--off-white-color)",
+                    }}
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
             sx={{
               // Border styles
               "& .MuiOutlinedInput-root": {
                 borderColor: "var(--off-white-color)",
-                transition: "border-color 0.3s ease",
                 "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
                   borderColor: "var(--accent-color)",
                 },
@@ -128,18 +181,20 @@ function Login() {
               },
               "& .MuiOutlinedInput-notchedOutline": {
                 borderColor: "var(--off-white-color)",
+                transition: "all 0.3s ease",
               },
               // Label styles
               "& .MuiInputLabel-root": {
                 color: "var(--off-white-color)",
                 fontFamily: "TextFont",
                 fontSize: "large",
-                "&.Mui-focused": {
-                  color: "var(--accent-color)",
-                },
-                "&:hover": {
-                  color: "var(--darker-accent-color)",
-                },
+                transition: "all 0.3s ease",
+              },
+              "&:hover .MuiInputLabel-root": {
+                color: "var(--darker-accent-color)",
+              },
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "var(--accent-color)",
               },
               // Input text color
               "& .MuiInputBase-input": {
@@ -147,15 +202,20 @@ function Login() {
                 fontFamily: "TextFont",
                 fontSize: "large",
               },
+              // Autofill background color fix
+              "&:-webkit-autofill": {
+                "-webkit-box-shadow": "0 0 0 100px #121212 inset !important",
+                "-webkit-text-fill-color": "var(--off-white-color) !important",
+              },
             }}
           />
+          {/* Error message display */}
           {error && (
             <Typography
               align="center"
               fullWidth
               sx={{
                 my: 1,
-                mx: 7,
                 fontSize: "x-large",
                 color: "var(--error-color)",
                 fontFamily: "TextFont",
@@ -164,12 +224,28 @@ function Login() {
               {error}
             </Typography>
           )}
+          {/* Login button */}
           <FilledButton
-            text="Login"
             onClick={handleSubmit}
             width="100%"
-            fontSize="20px"
+            sx={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            isLoading={loading}
+            text={"Login"}
           />
+          {/* {loading ? (
+              <CircularProgress
+                size={35}
+                sx={{ color: "var(--off-white-color)" }}
+              />
+            ) : (
+              "Login"
+            )} */}
+          {/* </FilledButton> */}
+          {/* Registration text */}
           <Box
             sx={{
               display: "flex",

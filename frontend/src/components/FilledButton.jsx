@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 
 const FilledButton = ({
   text,
@@ -10,6 +10,9 @@ const FilledButton = ({
   mr = "0px",
   ml = "0px",
   mb = "0px",
+  children,
+  mainColor = "var(--accent-color)",
+  isLoading = false,
 }) => {
   return (
     <Button
@@ -28,18 +31,33 @@ const FilledButton = ({
         marginLeft: ml,
         marginRight: mr,
         cursor: "pointer",
-        color: "var(--accent-color)",
+        color: mainColor,
         backgroundColor: "transparent",
-        border: "1px solid var(--accent-color)",
+        border: `1px solid ${mainColor}`,
+        position: "relative",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        transition: "all 0.3s ease",
         "&:hover": {
-          backgroundColor: "var(--accent-color)",
-          border: "1px solid var(--accent-color)",
+          backgroundColor: mainColor,
+          border: `1px solid ${mainColor}`,
           color: "var(--off-white-color)",
-          boxShadow: "0 0 10px var(--accent-color)",
+          boxShadow: `0 0 10px ${mainColor}`,
         },
       }}
+      disabled={isLoading}
     >
-      {text}
+      {isLoading ? (
+        <CircularProgress
+          size={35}
+          sx={{
+            color: mainColor,
+          }}
+        />
+      ) : (
+        children || text
+      )}
     </Button>
   );
 };

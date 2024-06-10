@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Registration from "./pages/Registration";
@@ -28,21 +28,21 @@ function App() {
               justifyContent: "center",
             }}
           >
-            <Link to="/" sx={{ textDecoration: "none", color: "inherit" }}>
-              <Typography
-                sx={{
-                  fontSize: "40px",
-                  fontWeight: 700,
-                  color: "var(--off-white-color)",
-                  marginTop: "10px",
-                  marginBottom: "10px",
-                  fontFamily: "AccentFont",
-                  textDecoration: "none",
-                }}
-              >
-                WORDLER
-              </Typography>
-            </Link>
+            <Typography
+              component="a"
+              href="/"
+              sx={{
+                fontSize: "40px",
+                fontWeight: 700,
+                color: "var(--off-white-color)",
+                marginTop: "10px",
+                marginBottom: "10px",
+                fontFamily: "AccentFont",
+                textDecoration: "none",
+              }}
+            >
+              WORDLER
+            </Typography>
           </Toolbar>
         </AppBar>
         <Box
