@@ -1,46 +1,19 @@
-@import "./colors.css";
-@import "./fonts.css";
+@import './colors.css';
+@import './fonts.css';
 
-/* Global styles */
-:root {
-  background: url("../../public/images/BG_1.jpg");
-  background-size: cover;
-  background-position: center;
+body {
+  background: url('../../public/images/BG_1.jpg') no-repeat top center;
+  background-size: 100% auto; /* Ensures the width is always 100% of the viewport */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  width: 100vw;
+  overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
-/* .app-bar {
-  background-color: var(--black-color);
-  border-radius: 10px;
-  width: 98%;
-  left: 50%;
-  transform: translateX(-50%);
-  top: 24px;
-  position: fixed;
-  z-index: 1000;
-}
-
-.global-header {
-  font-size: 40px;
-  font-weight: 700;
-  color: var(--off-white-color);
-  margin-top: 10px;
-  margin-bottom: 10px;
-  font-family: "AccentFont";
-}
-
-.app-bar a {
-  text-decoration: none;
-  color: inherit;
-}
-
-.app-bar .toolbar {
-  justify-content: center;
-}
-
-.content {
-  max-width: 100%;
-  padding-left: 2%;
-  padding-right: 2%;
-  align-content: center;
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   box-sizing: border-box;
-} */
+}

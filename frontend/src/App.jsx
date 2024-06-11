@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./pages/Home";
-import Login from "./pages/Login";
-import Registration from "./pages/Registration";
-import { Typography, Box, AppBar, Toolbar } from "@mui/material";
-import "./styles/app.css";
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Registration from './pages/Registration';
+import { Typography, Box, AppBar, Toolbar } from '@mui/material';
+import './styles/app.css';
 
 function App() {
   return (
@@ -13,32 +13,33 @@ function App() {
         <AppBar
           position="fixed"
           sx={{
-            backgroundColor: "var(--black-color)",
-            borderRadius: "10px",
-            width: "98%",
-            left: "50%",
-            transform: "translateX(-50%)",
-            top: "24px",
-            position: "fixed",
+            backgroundColor: 'var(--black-color)',
+            borderRadius: '10px',
+            width: '98%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            top: '18px',
+            position: 'fixed',
             zIndex: 1000,
           }}
+          fullWidth
         >
           <Toolbar
             sx={{
-              justifyContent: "center",
+              justifyContent: 'center',
             }}
           >
             <Typography
               component="a"
               href="/"
               sx={{
-                fontSize: "40px",
+                fontSize: '40px',
                 fontWeight: 700,
-                color: "var(--off-white-color)",
-                marginTop: "10px",
-                marginBottom: "10px",
-                fontFamily: "AccentFont",
-                textDecoration: "none",
+                color: 'var(--off-white-color)',
+                marginTop: '10px',
+                marginBottom: '10px',
+                fontFamily: 'AccentFont',
+                textDecoration: 'none',
               }}
             >
               WORDLER
@@ -48,11 +49,11 @@ function App() {
         <Box
           sx={{
             mt: 12,
-            maxWidth: "100%",
-            paddingLeft: "2%",
-            paddingRight: "2%",
-            alignContent: "center",
-            boxSizing: "border-box",
+            maxWidth: '100%',
+            paddingLeft: '2%',
+            paddingRight: '2%',
+            alignContent: 'center',
+            boxSizing: 'border-box',
           }}
         >
           <Routes>

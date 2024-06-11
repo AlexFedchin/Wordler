@@ -1,23 +1,23 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import { Container, Typography, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import FilledButton from "../components/FilledButton";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { Container, Typography, Box } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import FilledButton from '../components/FilledButton';
 
 function Home() {
   const [data, setData] = useState(null);
-  const API_BASE_URL = "http://localhost:8000/api/";
+  const API_BASE_URL = 'http://localhost:8000/api/';
   const navigate = useNavigate();
   var currentUser = null;
 
   useEffect(() => {
     axios
-      .get(API_BASE_URL + "test/")
+      .get(API_BASE_URL + 'test/')
       .then((response) => {
         setData(response.data);
       })
       .catch((error) => {
-        console.error("Error fetching data:", error);
+        console.error('Error fetching data:', error);
       });
   }, []);
 
@@ -25,20 +25,20 @@ function Home() {
     <Box margin={0}>
       <Container
         sx={{
-          padding: "24px",
-          margin: "0px",
-          bgcolor: "transparent",
-          borderRadius: "10px",
-          alignContent: "center",
+          padding: '24px',
+          margin: '0px',
+          bgcolor: 'transparent',
+          borderRadius: '10px',
+          alignContent: 'center',
         }}
       >
         <Typography
           align="left"
           sx={{
-            fontSize: "10rem",
+            fontSize: '800%',
             fontWeight: 500,
-            color: "var(--off-white-color)",
-            fontFamily: "AccentFont",
+            color: 'var(--off-white-color)',
+            fontFamily: 'AccentFont',
           }}
         >
           WORDLER
@@ -46,31 +46,31 @@ function Home() {
         <Typography
           align="left"
           sx={{
-            fontSize: "x-large",
-            color: "var(--off-white-color)",
-            fontFamily: "TextFont",
+            fontSize: 'x-large',
+            color: 'var(--off-white-color)',
+            fontFamily: 'TextFont',
           }}
         >
-          An{" "}
+          An{' '}
           <span
             style={{
-              fontSize: "x-large",
-              color: "var(--accent-color)",
-              fontFamily: "TextFont",
+              fontSize: 'x-large',
+              color: 'var(--accent-color)',
+              fontFamily: 'TextFont',
             }}
           >
             easy
-          </span>{" "}
-          way to learn{" "}
+          </span>{' '}
+          way to learn{' '}
           <span
             style={{
-              fontSize: "x-large",
-              color: "var(--accent-color)",
-              fontFamily: "TextFont",
+              fontSize: 'x-large',
+              color: 'var(--accent-color)',
+              fontFamily: 'TextFont',
             }}
           >
             difficult
-          </span>{" "}
+          </span>{' '}
           words.
         </Typography>
         <Box display="flex">
@@ -78,9 +78,9 @@ function Home() {
             text="Play"
             onClick={() => {
               if (currentUser == null) {
-                navigate("/login");
+                navigate('/login');
               } else {
-                navigate("/play");
+                navigate('/play');
               }
             }}
             width={300}
@@ -92,9 +92,9 @@ function Home() {
           <Box textAlign="center" mt={4}>
             <Typography
               sx={{
-                fontSize: "24px",
-                color: "var(--off-white-color)",
-                fontFamily: "TextFont",
+                fontSize: '24px',
+                color: 'var(--off-white-color)',
+                fontFamily: 'TextFont',
               }}
             >
               {data.message}

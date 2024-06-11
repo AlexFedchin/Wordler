@@ -1,18 +1,19 @@
-import React from "react";
-import { Button, CircularProgress } from "@mui/material";
+import React from 'react';
+import { Button, CircularProgress } from '@mui/material';
 
 const FilledButton = ({
   text,
   onClick,
   width = 300,
-  fontSize = "20px",
-  mt = "8px",
-  mr = "0px",
-  ml = "0px",
-  mb = "0px",
+  fontSize = '20px',
+  mt = '8px',
+  mr = '0px',
+  ml = '0px',
+  mb = '0px',
   children,
-  mainColor = "var(--accent-color)",
+  mainColor = 'var(--accent-color)',
   isLoading = false,
+  disabled = false,
 }) => {
   return (
     <Button
@@ -21,32 +22,32 @@ const FilledButton = ({
       sx={{
         mt: 7,
         width: width,
-        fontFamily: "ButtonFont",
+        fontFamily: 'ButtonFont',
         fontSize: fontSize,
         fontWeight: 700,
-        borderRadius: "5px",
-        padding: "10px 20px",
+        borderRadius: '5px',
+        padding: '10px 20px',
         marginTop: mt,
         marginBottom: mb,
         marginLeft: ml,
         marginRight: mr,
-        cursor: "pointer",
-        color: mainColor,
-        backgroundColor: "transparent",
-        border: `1px solid ${mainColor}`,
-        position: "relative",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        transition: "all 0.3s ease",
-        "&:hover": {
-          backgroundColor: mainColor,
-          border: `1px solid ${mainColor}`,
-          color: "var(--off-white-color)",
-          boxShadow: `0 0 10px ${mainColor}`,
+        cursor: 'pointer',
+        color: disabled ? 'var(--off-black-color)' : mainColor,
+        backgroundColor: 'transparent',
+        border: `1px solid ${disabled ? 'var(--off-black-color)' : mainColor}`,
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        transition: 'all 0.3s ease',
+        '&:hover': {
+          backgroundColor: !disabled && mainColor,
+          border: !disabled && `1px solid ${mainColor}`,
+          color: !disabled && 'var(--off-white-color)',
+          boxShadow: !disabled && `0 0 10px ${mainColor}`,
         },
       }}
-      disabled={isLoading}
+      disabled={isLoading || disabled}
     >
       {isLoading ? (
         <CircularProgress
