@@ -1,4 +1,4 @@
-@import "./colors.css";
+/* @import "./colors.css";
 @import "./fonts.css";
 
 .container {
@@ -58,12 +58,12 @@
 }
 
 .button.contained:hover {
-  /* background-color: var(--darker-accent-color); */
+  /* background-color: var(--darker-accent-color);
   box-shadow: 0 0 15px var(--accent-color);
   transition: box-shadow 0.3s ease;
 }
 
-/* Default styles for text fields and labels */
+/* Default styles for text fields and labels
 .text-field .MuiOutlinedInput-root {
   border-color: var(--off-white-color);
   transition: border-color 0.3s ease;
@@ -79,7 +79,7 @@
   font-size: large;
 }
 
-/* Styles for hovered text fields */
+
 .text-field .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline {
   border-color: var(--darker-accent-color);
   transition: border-color 0.3s ease;
@@ -89,7 +89,7 @@
   color: var(--darker-accent-color);
 }
 
-/* Styles for focused text fields and labels */
+/* Styles for focused text fields and labels
 .text-field
   .MuiOutlinedInput-root.Mui-focused
   .MuiOutlinedInput-notchedOutline {
@@ -99,4 +99,4 @@
 
 .text-field .MuiInputLabel-root.Mui-focused {
   color: var(--accent-color);
-}
+} */
