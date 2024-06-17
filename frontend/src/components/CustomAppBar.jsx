@@ -95,7 +95,7 @@ const CustomAppBar = () => {
           onClick={!user ? handleLoginRedirect : handleDropdownOpen}
           sx={{
             marginLeft: "auto",
-            marginRight: "5vw",
+            marginRight: "15vw",
             padding: 1,
             "& .MuiSvgIcon-root": {
               fontSize: "2rem",
