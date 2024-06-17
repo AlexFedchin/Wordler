@@ -3,6 +3,7 @@ import { Container, Typography, Box } from "@mui/material";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
+// import API_BASE_URL from "../config";
 
 function Registration() {
   const [nickname, setNickname] = React.useState("");

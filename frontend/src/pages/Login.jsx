@@ -6,6 +6,7 @@ import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
+import API_BASE_URL from "../config";
 
 function Login() {
   const [nickname, setNickname] = React.useState("");
@@ -13,14 +14,13 @@ function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
   const [error, setError] = useState("");
-  const { setUser } = useUser(); // Get setUser from context
+  const { setUser } = useUser();
   const navigate = useNavigate();
-  const API_BASE_URL = "http://localhost:8000/api/";
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
-    setError(""); // Clear any previous errors
+    setError("");
 
     try {
       const response = await axios.get(API_BASE_URL + "users/");
@@ -33,8 +33,8 @@ function Login() {
       if (foundUser) {
         setUser(foundUser);
         setError("Login successful");
-        console.log("Logged in as:", foundUser); // Use foundUser instead of user
-        navigate("/"); // Navigate to /home after successful login
+        console.log("Logged in as:", foundUser);
+        navigate("/");
       } else {
         setError("Wrong nickname or password");
       }
@@ -48,6 +48,12 @@ function Login() {
 
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit(event);
+    }
   };
 
   return (
@@ -73,6 +79,7 @@ function Login() {
             label="Nickname"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
           {/* Password TextField */}
           <CustomTextField
@@ -83,6 +90,7 @@ function Login() {
             showPassword={showPassword}
             onToggleShowPassword={handleClickShowPassword}
             mb="16px"
+            onKeyDown={handleKeyDown}
           />
 
           {/* Error message display */}
@@ -103,7 +111,7 @@ function Login() {
 
           {/* Login button */}
           <FilledButton
-            onClick={handleSubmit}
+            type="submit"
             width="100%"
             sx={{
               display: "flex",
@@ -149,7 +157,8 @@ function Login() {
                 textDecoration: "none",
                 cursor: "pointer",
                 "&:hover": {
-                  textShadow: "0 0 10px var(--accent-color)",
+                  textShadow:
+                    "0 0 4px var(--accent-color), 0 0 8px var(--accent-color), 0 0 16px var(--accent-color)",
                   transition: "text-shadow 0.3s ease",
                 },
               }}
