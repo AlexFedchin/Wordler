@@ -5,10 +5,23 @@ import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import SectionSubheading from "../components/SectionSubheading";
+import { keyframes } from "@mui/system";
+import API_BASE_URL from "../config";
+
+const glow = keyframes`
+  0% {
+    text-shadow: 0 0 2px var(--accent-color), 0 0 4px var(--accent-color);
+  }
+  50% {
+    text-shadow: 0 0 4px var(--accent-color), 0 0 12px var(--accent-color), 0 0 16px var(--accent-color);
+  }
+  100% {
+    text-shadow: 0 0 2px var(--accent-color), 0 0 6px var(--accent-color), 0 0 8px var(--accent-color);
+  }
+`;
 
 function Home() {
   const [data, setData] = useState(null);
-  const API_BASE_URL = "http://localhost:8000/api/";
   const navigate = useNavigate();
   const { user } = useUser();
 
@@ -50,10 +63,15 @@ function Home() {
           fontSize: "x-large",
           color: "var(--off-white-color)",
           fontFamily: "TextFont",
+          "& .glowing-text:hover": {
+            transition: "all 0,3s ease",
+            animation: `${glow} 1.5s infinite alternate`,
+          },
         }}
       >
         An{" "}
         <span
+          className="glowing-text"
           style={{
             fontSize: "x-large",
             color: "var(--accent-color)",
@@ -64,6 +82,7 @@ function Home() {
         </span>{" "}
         way to learn{" "}
         <span
+          className="glowing-text"
           style={{
             fontSize: "x-large",
             color: "var(--accent-color)",
