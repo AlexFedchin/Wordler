@@ -36,7 +36,12 @@ const CustomAppBar = () => {
   // Function for the "My Profile" button
   const handleMyProfile = () => {
     setAnchorEl(null);
-    navigate("/myprofile");
+    navigate("/profile");
+  };
+  // Function for the "My Profile" button
+  const handleWordLists = () => {
+    setAnchorEl(null);
+    navigate("/wordlists");
   };
 
   // Function for the Logout button
@@ -71,7 +76,7 @@ const CustomAppBar = () => {
             navigate("/");
           }}
           sx={{
-            fontSize: "40px",
+            fontSize: "2.2rem",
             fontWeight: 700,
             color: "var(--off-white-color)",
             marginTop: "10px",
@@ -90,7 +95,7 @@ const CustomAppBar = () => {
           onClick={!user ? handleLoginRedirect : handleDropdownOpen}
           sx={{
             marginLeft: "auto",
-            marginRight: "20%",
+            marginRight: "5vw",
             padding: 1,
             "& .MuiSvgIcon-root": {
               fontSize: "2rem",
@@ -135,7 +140,7 @@ const CustomAppBar = () => {
             My Profile
           </MenuItem>
           <MenuItem
-            onClick={() => navigate("/wordlists")}
+            onClick={handleWordLists}
             sx={{ fontFamily: "TextFont", fontSize: "20px" }}
           >
             Word Lists

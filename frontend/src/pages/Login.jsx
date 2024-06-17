@@ -72,7 +72,7 @@ function Login() {
       <SectionSubheading text={"Login to Play"} />
 
       {/* Box for the form */}
-      <Box padding={2} width={"500px"}>
+      <Box padding={2} width={"30vw"} maxWidth={"600px"} minWidth={"300px"}>
         <form onSubmit={handleSubmit}>
           {/* Nickname TextField */}
           <CustomTextField
@@ -97,7 +97,7 @@ function Login() {
           {error && (
             <Typography
               align="center"
-              fullWidth
+              width={"100%"}
               sx={{
                 mt: 0,
                 fontSize: "x-large",
@@ -111,6 +111,7 @@ function Login() {
 
           {/* Login button */}
           <FilledButton
+            onClick={handleSubmit}
             type="submit"
             width="100%"
             sx={{

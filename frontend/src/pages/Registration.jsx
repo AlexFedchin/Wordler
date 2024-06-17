@@ -54,7 +54,7 @@ function Registration() {
       }}
     >
       <SectionSubheading text={"Register a New User"} />
-      <Box padding={2} width={"500px"}>
+      <Box padding={2} width={"30vw"} maxWidth={"600px"} minWidth={"300px"}>
         <form onSubmit={handleSubmit}>
           {/* Nickname TextField */}
           <CustomTextField

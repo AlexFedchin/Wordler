@@ -46,10 +46,12 @@ const FilledButton = ({
             disabled ? "var(--off-black-color)" : mainColor
           }`,
           color: disabled ? "var(--off-black-color)" : "var(--off-white-color)",
-          boxShadow: !disabled && `0 0 10px ${mainColor}`,
+          boxShadow:
+            !disabled &&
+            `0 0 2px ${mainColor}, 0 0 8px ${mainColor}, 0 0 18px ${mainColor}`,
         },
       }}
-      //disabled={isLoading || disabled}
+      disabled={isLoading}
     >
       {isLoading ? (
         <CircularProgress
