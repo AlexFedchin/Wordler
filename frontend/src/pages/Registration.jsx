@@ -1,9 +1,12 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { Container, Typography, Box } from "@mui/material";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
-// import API_BASE_URL from "../config";
+import { useUser } from "../UserContext";
+import axios from "axios";
+import API_BASE_URL from "../config";
 
 function Registration() {
   const [nickname, setNickname] = React.useState("");
@@ -13,23 +16,56 @@ function Registration() {
   const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
   const [error, setError] = React.useState("");
   const [loading, setLoading] = React.useState(false);
+  const { setUser } = useUser();
+  const navigate = useNavigate();
   const passwordMinLength = 7;
   const nicknameMinLength = 4;
   const nicknameMaxLength = 12;
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
-    if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      setLoading(false);
-    } else {
-      setTimeout(() => {
-        setLoading(false);
-        setError("");
+    try {
+      const response = await axios.post(`${API_BASE_URL}register/`, {
+        nickname,
+        password,
+      });
+
+      if (response.status === 201) {
         console.log("Registration successful");
-      }, 2000);
+        // Login as a newly created user
+        try {
+          const response = await axios.get(API_BASE_URL + "users/");
+          const existingUsers = response.data;
+          console.log("Existing users:", existingUsers);
+          const foundUser = existingUsers.find(
+            (user) => user.nickname === nickname && user.password === password
+          );
+
+          if (foundUser) {
+            setUser(foundUser);
+            console.log("Logged in as:", foundUser);
+            navigate("/");
+          } else {
+            console.log("Error logging in as a created user");
+            navigate("/login");
+          }
+        } catch (error) {
+          console.error("Error fetching data:", error);
+          setError("Something went wrong. Try again later.");
+        }
+        setNickname("");
+        setPassword("");
+        setConfirmPassword("");
+      }
+    } catch (error) {
+      console.error("Error during registration:", error);
+      setError(
+        error.response?.data?.error || "Something went wrong. Try again later."
+      );
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -119,6 +155,13 @@ function Registration() {
             type={showConfirmPassword ? "text" : "password"}
             showPassword={showConfirmPassword}
             onToggleShowPassword={handleClickShowConfirmPassword}
+            mb={
+              password !== confirmPassword &&
+              confirmPassword !== "" &&
+              password !== ""
+                ? "4px"
+                : "16px"
+            }
           />
           {password !== confirmPassword &&
             confirmPassword !== "" &&
@@ -130,6 +173,7 @@ function Registration() {
                   fontSize: "large",
                   color: "var(--error-color)",
                   fontFamily: "TextFont",
+                  marginBottom: "0px",
                 }}
               >
                 Passwords do not match
@@ -138,9 +182,9 @@ function Registration() {
           {error && (
             <Typography
               align="center"
-              fullWidth
+              width={"100%"}
               sx={{
-                my: 1,
+                mt: 0,
                 fontSize: "x-large",
                 color: "var(--error-color)",
                 fontFamily: "TextFont",
@@ -157,7 +201,7 @@ function Registration() {
               justifyContent: "center",
               alignItems: "center",
             }}
-            mt="32px"
+            mt="16px"
             disabled={
               nickname.length < nicknameMinLength ||
               password.length < passwordMinLength ||
