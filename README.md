@@ -1,5 +1,7 @@
 # Wordler
 
+![Wordler Logo](frontend/public/images/favicon.ico)
+
 ## Description
 
 This project is a web application, intended for memorising words to assist in learning new languages.
