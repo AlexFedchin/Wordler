@@ -1,6 +1,6 @@
 # Wordler
 
-![Wordler Logo](frontend/public/images/favicon.ico)
+![Wordler Logo](frontend/public/favicon.ico)
 
 ## Description
 
