@@ -214,6 +214,48 @@ function Registration() {
             isLoading={loading}
             text={"Register"}
           />
+          {/* Row with login suggestion */}
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              alignItems: "center",
+              justifyContent: "center",
+              mt: 2,
+              gap: 1,
+            }}
+          >
+            <Typography
+              align="center"
+              sx={{
+                fontSize: "x-large",
+                color: "var(--off-white-color)",
+                fontFamily: "TextFont",
+              }}
+            >
+              Already have an account?
+            </Typography>
+            <Typography
+              align="center"
+              onClick={() => {
+                navigate("/login");
+              }}
+              sx={{
+                fontSize: "x-large",
+                color: "var(--accent-color)",
+                fontFamily: "TextFont",
+                textDecoration: "none",
+                cursor: "pointer",
+                "&:hover": {
+                  textShadow:
+                    "0 0 4px var(--accent-color), 0 0 8px var(--accent-color), 0 0 16px var(--accent-color)",
+                  transition: "text-shadow 0.3s ease",
+                },
+              }}
+            >
+              Login
+            </Typography>
+          </Box>
         </form>
       </Box>
     </Container>
