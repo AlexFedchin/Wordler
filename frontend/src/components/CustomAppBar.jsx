@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import API_BASE_URL from "../config";
 import {
   AppBar,
   Toolbar,
@@ -9,6 +11,7 @@ import {
   MenuItem,
 } from "@mui/material";
 import AccountCircle from "@mui/icons-material/AccountCircle";
+import Circle from "@mui/icons-material/Circle";
 import Logout from "@mui/icons-material/Logout";
 import { useUser } from "../UserContext";
 import { useNavigate } from "react-router-dom";
@@ -17,6 +20,18 @@ const CustomAppBar = () => {
   const { user, setUser } = useUser();
   const navigate = useNavigate();
   const [anchorEl, setAnchorEl] = useState(null);
+  const [data, setData] = useState(null);
+  // TODO: Check that this shit works
+  useEffect(() => {
+    axios
+      .get(API_BASE_URL + "test/")
+      .then((response) => {
+        setData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []);
 
   // Function for account icon button when no user is logged in
   const handleLoginRedirect = () => {
@@ -71,6 +86,37 @@ const CustomAppBar = () => {
         }}
       >
         <Box sx={{ flex: 1 }} />
+        {/* Indicator that the API works fine */}
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
+            position: "absolute",
+            left: "10%",
+            transform: "translateX(-50%)",
+          }}
+        >
+          <Typography
+            sx={{
+              fontFamily: "TextFont",
+              fontSize: "x-large",
+              fontWeight: 500,
+              marginRight: "4px",
+              marginTop: "2px",
+              cursor: "default",
+            }}
+          >
+            API
+          </Typography>
+          <Circle
+            sx={{
+              color: data ? "var(--accent-color)" : "var(--error-color)",
+              fontSize: "1.3rem",
+            }}
+          />
+        </Box>
+
         <Typography
           onClick={() => {
             navigate("/");

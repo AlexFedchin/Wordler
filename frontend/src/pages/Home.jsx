@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import { Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import SectionSubheading from "../components/SectionSubheading";
 import { keyframes } from "@mui/system";
-import API_BASE_URL from "../config";
 
 const glow = keyframes`
   0% {
@@ -21,20 +19,8 @@ const glow = keyframes`
 `;
 
 function Home() {
-  const [data, setData] = useState(null);
   const navigate = useNavigate();
   const { user } = useUser();
-
-  useEffect(() => {
-    axios
-      .get(API_BASE_URL + "test/")
-      .then((response) => {
-        setData(response.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-      });
-  }, []);
 
   return (
     <Box
@@ -93,34 +79,20 @@ function Home() {
         </span>{" "}
         words.
       </Typography>
-      <Box display="flex">
-        <FilledButton
-          text="Play"
-          onClick={() => {
-            if (user == null) {
-              navigate("/login");
-            } else {
-              navigate("/play");
-            }
-          }}
-          width={300}
-          fontSize="20px"
-          mt="40px"
-        />
-      </Box>
-      {data && (
-        <Typography
-          sx={{
-            fontSize: "24px",
-            color: "var(--off-white-color)",
-            fontFamily: "TextFont",
-            mt: 4,
-            textAlign: "center",
-          }}
-        >
-          {data.message}
-        </Typography>
-      )}
+
+      <FilledButton
+        text="Play"
+        onClick={() => {
+          if (user == null) {
+            navigate("/login");
+          } else {
+            navigate("/play");
+          }
+        }}
+        width={300}
+        fontSize="20px"
+        mt="40px"
+      />
       {user && (
         <SectionSubheading
           text={"Hello, " + user.nickname + "!"}
