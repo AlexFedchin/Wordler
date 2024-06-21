@@ -73,6 +73,7 @@ const CustomAppBar = () => {
   const handleLogout = () => {
     setAnchorEl(null);
     setUser(null);
+    navigate("/");
   };
 
   // Function for the "Login" button

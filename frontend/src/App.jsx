@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
+import Profile from "./pages/Profile";
 import Registration from "./pages/Registration";
 import { Box } from "@mui/material";
 import { UserProvider } from "./UserContext";
@@ -28,6 +29,7 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />
+              <Route path="/profile" element={<Profile />} />
               <Route path="/play" element={<Play />} />
               <Route path="/" element={<Home />} />
             </Routes>
