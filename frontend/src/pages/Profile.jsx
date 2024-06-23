@@ -5,32 +5,32 @@ import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
-import API_BASE_URL from "../config";
+import config from "../config";
 
 const Profile = () => {
   const { user, setUser } = useUser();
   const [newNickname, setNewNickname] = useState("");
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-  const [showPassword, setShowPassword] = useState(false);
+  const [showCurrentPassword, setShowCurrentPassword] = useState(false);
+  const [showNewPassword, setShowNewPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
 
+  // Function to send a request for updating nickname
   const handleUpdateNickname = async () => {
-    if (!newNickname) {
-      setError("Nickname cannot be empty.");
-      return;
-    }
-
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      const response = await axios.patch(API_BASE_URL + `users/${user.id}/`, {
-        nickname: newNickname,
-      });
+      const response = await axios.patch(
+        config.API_BASE_URL + `users/${user.id}/nickname`,
+        {
+          newNickname: newNickname,
+        }
+      );
 
       if (response.status === 200) {
         setUser({ ...user, nickname: newNickname });
@@ -45,21 +45,20 @@ const Profile = () => {
     }
   };
 
+  // Function to send a request for updating password
   const handleUpdatePassword = async () => {
-    if (!currentPassword || !newPassword) {
-      setError("Both passwords are required.");
-      return;
-    }
-
     setLoading(true);
     setError("");
     setSuccess("");
 
     try {
-      const response = await axios.patch(API_BASE_URL + `users/${user.id}/`, {
-        currentPassword,
-        newPassword,
-      });
+      const response = await axios.patch(
+        config.API_BASE_URL + `users/${user.id}/`,
+        {
+          currentPassword,
+          newPassword,
+        }
+      );
 
       if (response.status === 200) {
         setSuccess("Password updated successfully.");
@@ -74,8 +73,11 @@ const Profile = () => {
     }
   };
 
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
+  const handleClickShowCurrentPassword = () => {
+    setShowCurrentPassword(!showCurrentPassword);
+  };
+  const handleClickShowNewPassword = () => {
+    setShowNewPassword(!showNewPassword);
   };
 
   return (
@@ -111,6 +113,22 @@ const Profile = () => {
             onChange={(e) => setNewNickname(e.target.value)}
             mb="16px"
           />
+          {newNickname !== "" &&
+            (newNickname.length < config.nicknameMinLength ||
+              newNickname.length > config.nicknameMaxLength) && (
+              <Typography
+                align="left"
+                width={"100%"}
+                sx={{
+                  fontSize: "large",
+                  color: "var(--error-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                Nickname should be between {config.nicknameMinLength} and{" "}
+                {config.nicknameMaxLength} characters long
+              </Typography>
+            )}
           <FilledButton
             onClick={handleUpdateNickname}
             width="100%"
@@ -120,7 +138,11 @@ const Profile = () => {
               alignItems: "center",
             }}
             mt="16px"
-            disabled={loading}
+            disabled={
+              newNickname === "" ||
+              newNickname.length < config.nicknameMinLength ||
+              newNickname.length > config.nicknameMaxLength
+            }
             isLoading={loading}
             text={"Update Nickname"}
           />
@@ -141,16 +163,18 @@ const Profile = () => {
             label="Current Password"
             value={currentPassword}
             onChange={(e) => setCurrentPassword(e.target.value)}
-            type={showPassword ? "text" : "password"}
+            type={showCurrentPassword ? "text" : "password"}
+            showPassword={showCurrentPassword}
+            onToggleShowPassword={handleClickShowCurrentPassword}
             mb="16px"
           />
           <CustomTextField
             label="New Password"
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
-            type={showPassword ? "text" : "password"}
-            showPassword={showPassword}
-            onToggleShowPassword={handleClickShowPassword}
+            type={showNewPassword ? "text" : "password"}
+            showPassword={showNewPassword}
+            onToggleShowPassword={handleClickShowNewPassword}
             mb="16px"
           />
           <FilledButton
