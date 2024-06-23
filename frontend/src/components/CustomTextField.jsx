@@ -23,9 +23,12 @@ const CustomTextField = ({
       value={value}
       onChange={onChange}
       type={type}
-      onKeyDown={onKeyDown} // Pass onKeyDown to TextField
+      onKeyDown={onKeyDown}
       InputProps={
-        label === "Password" || label === "Confirm Password"
+        label === "Password" ||
+        label === "Confirm Password" ||
+        label === "Current Password" ||
+        label === "New Password"
           ? {
               endAdornment: (
                 <InputAdornment position="end">
