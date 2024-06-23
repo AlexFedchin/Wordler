@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import API_BASE_URL from "../config";
+import config from "../config";
 import {
   AppBar,
   Toolbar,
@@ -31,7 +31,7 @@ const CustomAppBar = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(API_BASE_URL + "test/")
+        .get(config.API_BASE_URL + "test/")
         .then((response) => {
           setData(response.data);
         })
@@ -208,39 +208,42 @@ const CustomAppBar = () => {
             },
           }}
         >
-          {user ? (
-            <>
-              <CustomMenuItem
-                title="My Profile"
-                onClick={handleMyProfile}
-                icon={<ManageProfile />}
-              />
-              <CustomMenuItem
-                title="Word Lists"
-                onClick={handleWordLists}
-                icon={<WordLists />}
-              />
-              <CustomMenuItem
-                title="Logout"
-                onClick={handleLogout}
-                color="var(--error-color)"
-                icon={<Logout />}
-              />
-            </>
-          ) : (
-            <>
-              <CustomMenuItem
-                title="Login"
-                onClick={handleLogin}
-                icon={<Login />}
-              />
-              <CustomMenuItem
-                title="Register"
-                onClick={handleRegister}
-                icon={<Register />}
-              />
-            </>
-          )}
+          {user
+            ? [
+                <CustomMenuItem
+                  key="profile"
+                  title="My Profile"
+                  onClick={handleMyProfile}
+                  icon={<ManageProfile />}
+                />,
+                <CustomMenuItem
+                  key="wordlists"
+                  title="Word Lists"
+                  onClick={handleWordLists}
+                  icon={<WordLists />}
+                />,
+                <CustomMenuItem
+                  key="logout"
+                  title="Logout"
+                  onClick={handleLogout}
+                  color="var(--error-color)"
+                  icon={<Logout />}
+                />,
+              ]
+            : [
+                <CustomMenuItem
+                  key="login"
+                  title="Login"
+                  onClick={handleLogin}
+                  icon={<Login />}
+                />,
+                <CustomMenuItem
+                  key="register"
+                  title="Register"
+                  onClick={handleRegister}
+                  icon={<Register />}
+                />,
+              ]}
         </Menu>
       </Toolbar>
     </AppBar>

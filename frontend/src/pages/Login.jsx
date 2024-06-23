@@ -6,7 +6,7 @@ import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
-import API_BASE_URL from "../config";
+import config from "../config";
 
 function Login() {
   const [nickname, setNickname] = React.useState("");
@@ -23,7 +23,7 @@ function Login() {
     setError("");
 
     try {
-      const response = await axios.get(API_BASE_URL + "users/");
+      const response = await axios.get(config.API_BASE_URL + "users/");
       const existingUsers = response.data;
       console.log("Existing users:", existingUsers);
       const foundUser = existingUsers.find(

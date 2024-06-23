@@ -6,7 +6,7 @@ import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
 import { useUser } from "../UserContext";
 import axios from "axios";
-import API_BASE_URL from "../config";
+import config from "../config";
 
 function Registration() {
   const [nickname, setNickname] = React.useState("");
@@ -18,16 +18,13 @@ function Registration() {
   const [loading, setLoading] = React.useState(false);
   const { setUser } = useUser();
   const navigate = useNavigate();
-  const passwordMinLength = 7;
-  const nicknameMinLength = 4;
-  const nicknameMaxLength = 12;
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
 
     try {
-      const response = await axios.post(`${API_BASE_URL}register/`, {
+      const response = await axios.post(`${config.API_BASE_URL}register/`, {
         nickname,
         password,
       });
@@ -36,7 +33,7 @@ function Registration() {
         console.log("Registration successful");
         // Login as a newly created user
         try {
-          const response = await axios.get(API_BASE_URL + "users/");
+          const response = await axios.get(config.API_BASE_URL + "users/");
           const existingUsers = response.data;
           console.log("Existing users:", existingUsers);
           const foundUser = existingUsers.find(
@@ -98,33 +95,23 @@ function Registration() {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          {nickname !== "" && nickname.length < nicknameMinLength && (
-            <Typography
-              align="left"
-              fullWidth
-              sx={{
-                fontSize: "large",
-                color: "var(--error-color)",
-                fontFamily: "TextFont",
-              }}
-            >
-              Nickname should be at least {nicknameMinLength} characters long
-            </Typography>
-          )}
-          {nickname.length > nicknameMaxLength && (
-            <Typography
-              align="left"
-              fullWidth
-              sx={{
-                fontSize: "large",
-                color: "var(--error-color)",
-                fontFamily: "TextFont",
-              }}
-            >
-              Nickname should be no more than {nicknameMaxLength} characters
-              long
-            </Typography>
-          )}
+          {nickname !== "" &&
+            (nickname.length < config.nicknameMinLength ||
+              nickname.length > config.nicknameMaxLength) && (
+              <Typography
+                align="left"
+                width={"100%"}
+                sx={{
+                  fontSize: "large",
+                  color: "var(--error-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                Nickname should be between {config.nicknameMinLength} and{" "}
+                {config.nicknameMaxLength} characters long
+              </Typography>
+            )}
+
           {/* Password TextField */}
           <CustomTextField
             label="Password"
@@ -134,19 +121,22 @@ function Registration() {
             showPassword={showPassword}
             onToggleShowPassword={handleClickShowPassword}
           />
-          {password !== "" && password.length < passwordMinLength && (
-            <Typography
-              align="left"
-              fullWidth
-              sx={{
-                fontSize: "large",
-                color: "var(--error-color)",
-                fontFamily: "TextFont",
-              }}
-            >
-              Passwords should be at least {passwordMinLength} characters long
-            </Typography>
-          )}
+          {password !== "" &&
+            (password.length < config.passwordMinLength ||
+              password.length > config.passwordMaxLength) && (
+              <Typography
+                align="left"
+                width={"100%"}
+                sx={{
+                  fontSize: "large",
+                  color: "var(--error-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                Password should be between {config.passwordMinLength} and{" "}
+                {config.passwordMaxLength} characters long
+              </Typography>
+            )}
           {/* Confirm Password TextField */}
           <CustomTextField
             label="Confirm Password"
@@ -168,7 +158,7 @@ function Registration() {
             password !== "" && (
               <Typography
                 align="left"
-                fullWidth
+                width={"100%"}
                 sx={{
                   fontSize: "large",
                   color: "var(--error-color)",
@@ -203,13 +193,14 @@ function Registration() {
             }}
             mt="16px"
             disabled={
-              nickname.length < nicknameMinLength ||
-              password.length < passwordMinLength ||
+              nickname.length < config.nicknameMinLength ||
+              nickname.length > config.nicknameMaxLength ||
+              password.length < config.passwordMinLength ||
+              password.length > config.passwordMaxLength ||
               password !== confirmPassword ||
               password === "" ||
               confirmPassword === "" ||
-              nickname === "" ||
-              nickname.length > nicknameMaxLength
+              nickname === ""
             }
             isLoading={loading}
             text={"Register"}
