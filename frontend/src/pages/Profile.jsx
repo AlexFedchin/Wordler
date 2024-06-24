@@ -6,6 +6,7 @@ import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
 import config from "../config";
+import { validateNickname, validatePassword } from "../utils/validation";
 
 const Profile = () => {
   const { user, setUser } = useUser();
@@ -14,6 +15,7 @@ const Profile = () => {
   const [newPassword, setNewPassword] = useState("");
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [currentPasswordCorrect, setCurrentPasswordCorrect] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
@@ -53,17 +55,17 @@ const Profile = () => {
 
     try {
       const response = await axios.patch(
-        config.API_BASE_URL + `users/${user.id}/`,
+        config.API_BASE_URL + `users/${user.id}/password`,
         {
-          currentPassword,
           newPassword,
         }
       );
 
       if (response.status === 200) {
         setSuccess("Password updated successfully.");
-        setCurrentPassword("");
+        setUser({ ...user, password: newPassword });
         setNewPassword("");
+        setCurrentPasswordCorrect(false);
       }
     } catch (error) {
       console.error("Error updating password:", error);
@@ -78,6 +80,25 @@ const Profile = () => {
   };
   const handleClickShowNewPassword = () => {
     setShowNewPassword(!showNewPassword);
+  };
+
+  const handleCheckCurrentPassword = () => {
+    if (currentPassword === user.password) {
+      setCurrentPasswordCorrect(true);
+      setCurrentPassword("");
+      setError("");
+      setSuccess("");
+    } else {
+      setError("Password incorrect.");
+      setCurrentPassword("");
+      setSuccess("");
+    }
+  };
+
+  const handleKeyPress = (e, action) => {
+    if (e.key === "Enter") {
+      action();
+    }
   };
 
   return (
@@ -96,6 +117,7 @@ const Profile = () => {
 
       <Box padding={2} width={"30vw"} maxWidth={"600px"} minWidth={"300px"}>
         <form>
+          {/* Changing nickname */}
           <Typography
             sx={{
               fontSize: "large",
@@ -113,22 +135,19 @@ const Profile = () => {
             onChange={(e) => setNewNickname(e.target.value)}
             mb="16px"
           />
-          {newNickname !== "" &&
-            (newNickname.length < config.nicknameMinLength ||
-              newNickname.length > config.nicknameMaxLength) && (
-              <Typography
-                align="left"
-                width={"100%"}
-                sx={{
-                  fontSize: "large",
-                  color: "var(--error-color)",
-                  fontFamily: "TextFont",
-                }}
-              >
-                Nickname should be between {config.nicknameMinLength} and{" "}
-                {config.nicknameMaxLength} characters long
-              </Typography>
-            )}
+          {newNickname !== "" && validateNickname(newNickname) !== "" && (
+            <Typography
+              align="left"
+              width={"100%"}
+              sx={{
+                fontSize: "large",
+                color: "var(--error-color)",
+                fontFamily: "TextFont",
+              }}
+            >
+              {validateNickname(newNickname)}
+            </Typography>
+          )}
           <FilledButton
             onClick={handleUpdateNickname}
             width="100%"
@@ -139,14 +158,13 @@ const Profile = () => {
             }}
             mt="16px"
             disabled={
-              newNickname === "" ||
-              newNickname.length < config.nicknameMinLength ||
-              newNickname.length > config.nicknameMaxLength
+              newNickname === "" || validateNickname(newNickname) !== ""
             }
             isLoading={loading}
             text={"Update Nickname"}
           />
 
+          {/* Changing password */}
           <Typography
             sx={{
               fontSize: "large",
@@ -159,37 +177,78 @@ const Profile = () => {
           >
             Change Password
           </Typography>
-          <CustomTextField
-            label="Current Password"
-            value={currentPassword}
-            onChange={(e) => setCurrentPassword(e.target.value)}
-            type={showCurrentPassword ? "text" : "password"}
-            showPassword={showCurrentPassword}
-            onToggleShowPassword={handleClickShowCurrentPassword}
-            mb="16px"
-          />
-          <CustomTextField
-            label="New Password"
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-            type={showNewPassword ? "text" : "password"}
-            showPassword={showNewPassword}
-            onToggleShowPassword={handleClickShowNewPassword}
-            mb="16px"
-          />
-          <FilledButton
-            onClick={handleUpdatePassword}
-            width="100%"
-            sx={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            mt="16px"
-            disabled={loading}
-            isLoading={loading}
-            text={"Update Password"}
-          />
+
+          {currentPasswordCorrect ? (
+            // Input new password to update
+            <>
+              <CustomTextField
+                label="New Password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                type={showNewPassword ? "text" : "password"}
+                showPassword={showNewPassword}
+                onToggleShowPassword={handleClickShowNewPassword}
+                onKeyDown={(e) => handleKeyPress(e, handleUpdatePassword)}
+                mb="16px"
+              />
+              {newPassword !== "" && validatePassword(newPassword) !== "" && (
+                <Typography
+                  align="left"
+                  width={"100%"}
+                  sx={{
+                    fontSize: "large",
+                    color: "var(--error-color)",
+                    fontFamily: "TextFont",
+                  }}
+                >
+                  {validatePassword(newPassword)}
+                </Typography>
+              )}
+              <FilledButton
+                onClick={handleUpdatePassword}
+                width="100%"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                mt="16px"
+                disabled={
+                  newPassword === "" || validatePassword(newPassword) !== ""
+                }
+                isLoading={loading}
+                text={"Update Password"}
+              />
+            </>
+          ) : (
+            // Input current password to check user
+            <>
+              <CustomTextField
+                label="Current Password"
+                value={currentPassword}
+                onChange={(e) => setCurrentPassword(e.target.value)}
+                type={showCurrentPassword ? "text" : "password"}
+                showPassword={showCurrentPassword}
+                onToggleShowPassword={handleClickShowCurrentPassword}
+                onKeyDown={(e) => handleKeyPress(e, handleCheckCurrentPassword)}
+                mb="16px"
+              />
+
+              <FilledButton
+                onClick={handleCheckCurrentPassword}
+                width="100%"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                mt="16px"
+                disabled={currentPassword === ""}
+                isLoading={loading}
+                text={"Submit"}
+              />
+            </>
+          )}
 
           {error && (
             <Typography
