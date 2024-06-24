@@ -138,3 +138,32 @@ app.patch("/api/users/:id/nickname", (req, res) => {
     });
   });
 });
+
+// Update password
+app.patch("/api/users/:id/password", (req, res) => {
+  const { id } = req.params;
+  const { newPassword } = req.body;
+
+  readUsers((err, users) => {
+    if (err) {
+      res.status(500).json({ error: "Failed to read user data" });
+      return;
+    }
+
+    const userIndex = users.findIndex((user) => user.id === parseInt(id));
+    if (userIndex === -1) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    users[userIndex].password = newPassword;
+
+    writeUsers(users, (writeErr) => {
+      if (writeErr) {
+        res.status(500).json({ error: "Failed to update user data" });
+      } else {
+        res.json({ message: "Password updated successfully" });
+      }
+    });
+  });
+});
