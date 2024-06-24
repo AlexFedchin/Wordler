@@ -4,6 +4,7 @@ import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Play from "./pages/Play";
 import Profile from "./pages/Profile";
+import WordLists from "./pages/WordLists";
 import Registration from "./pages/Registration";
 import { Box } from "@mui/material";
 import { UserProvider } from "./UserContext";
@@ -19,7 +20,7 @@ function App() {
           <Box
             sx={{
               mt: 12,
-              maxWidth: "100%",
+              width: "100%",
               paddingLeft: "2%",
               paddingRight: "2%",
               alignContent: "center",
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Registration />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/wordlists" element={<WordLists />} />
               <Route path="/play" element={<Play />} />
               <Route path="/" element={<Home />} />
             </Routes>
