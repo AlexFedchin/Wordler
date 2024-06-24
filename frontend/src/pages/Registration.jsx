@@ -7,6 +7,7 @@ import SectionSubheading from "../components/SectionSubheading";
 import { useUser } from "../UserContext";
 import axios from "axios";
 import config from "../config";
+import { validateNickname, validatePassword } from "../utils/validation";
 
 function Registration() {
   const [nickname, setNickname] = React.useState("");
@@ -95,22 +96,19 @@ function Registration() {
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
           />
-          {nickname !== "" &&
-            (nickname.length < config.nicknameMinLength ||
-              nickname.length > config.nicknameMaxLength) && (
-              <Typography
-                align="left"
-                width={"100%"}
-                sx={{
-                  fontSize: "large",
-                  color: "var(--error-color)",
-                  fontFamily: "TextFont",
-                }}
-              >
-                Nickname should be between {config.nicknameMinLength} and{" "}
-                {config.nicknameMaxLength} characters long
-              </Typography>
-            )}
+          {nickname !== "" && validateNickname(nickname) !== "" && (
+            <Typography
+              align="left"
+              width={"100%"}
+              sx={{
+                fontSize: "large",
+                color: "var(--error-color)",
+                fontFamily: "TextFont",
+              }}
+            >
+              {validateNickname(nickname)}
+            </Typography>
+          )}
 
           {/* Password TextField */}
           <CustomTextField
@@ -121,22 +119,19 @@ function Registration() {
             showPassword={showPassword}
             onToggleShowPassword={handleClickShowPassword}
           />
-          {password !== "" &&
-            (password.length < config.passwordMinLength ||
-              password.length > config.passwordMaxLength) && (
-              <Typography
-                align="left"
-                width={"100%"}
-                sx={{
-                  fontSize: "large",
-                  color: "var(--error-color)",
-                  fontFamily: "TextFont",
-                }}
-              >
-                Password should be between {config.passwordMinLength} and{" "}
-                {config.passwordMaxLength} characters long
-              </Typography>
-            )}
+          {password !== "" && validatePassword(password) !== "" && (
+            <Typography
+              align="left"
+              width={"100%"}
+              sx={{
+                fontSize: "large",
+                color: "var(--error-color)",
+                fontFamily: "TextFont",
+              }}
+            >
+              {validatePassword(password)}
+            </Typography>
+          )}
           {/* Confirm Password TextField */}
           <CustomTextField
             label="Confirm Password"
@@ -166,7 +161,7 @@ function Registration() {
                   marginBottom: "0px",
                 }}
               >
-                Passwords do not match
+                Passwords do not match.
               </Typography>
             )}
           {error && (
@@ -193,10 +188,8 @@ function Registration() {
             }}
             mt="16px"
             disabled={
-              nickname.length < config.nicknameMinLength ||
-              nickname.length > config.nicknameMaxLength ||
-              password.length < config.passwordMinLength ||
-              password.length > config.passwordMaxLength ||
+              validateNickname(nickname) !== "" ||
+              validatePassword(password) !== "" ||
               password !== confirmPassword ||
               password === "" ||
               confirmPassword === "" ||
