@@ -1,67 +1,16 @@
 const express = require("express");
-const cors = require("cors");
-const fs = require("fs");
-const path = require("path");
-const app = express();
-const users = require("./data/users.json");
-const wordLists = require("./data/wordLists.json");
-const BACKEND_PORT = 8000;
+const {
+  readUsers,
+  writeUsers,
+  generateUniqueId,
+} = require("../utils/fileUtils");
+const users = require("../data/users.json");
+const wordLists = require("../data/wordLists.json");
 
-// Allow requests from the frontend domain
-app.use(cors({ origin: "http://localhost:3000" }));
-
-// Middleware to parse JSON
-app.use(express.json());
-
-// Helper function to read users from the file
-const readUsers = (callback) => {
-  const filePath = path.join(__dirname, "data", "users.json");
-  fs.readFile(filePath, "utf8", (err, data) => {
-    if (err) {
-      console.error("Error reading users.json file:", err);
-      callback(err, null);
-    } else {
-      try {
-        const users = JSON.parse(data);
-        callback(null, users);
-      } catch (parseError) {
-        console.error("Error parsing users.json file:", parseError);
-        callback(parseError, null);
-      }
-    }
-  });
-};
-
-// Helper function to write users to the file
-const writeUsers = (users, callback) => {
-  const filePath = path.join(__dirname, "data", "users.json");
-  fs.writeFile(filePath, JSON.stringify(users, null, 2), (err) => {
-    if (err) {
-      console.error("Error writing to users.json file:", err);
-      callback(err);
-    } else {
-      callback(null);
-    }
-  });
-};
-
-// Helper function to assign a new user unique ID
-const generateUniqueId = (users) => {
-  const generateId = () => Math.floor(100000 + Math.random() * 900000);
-  let newId = generateId();
-  while (users.some((user) => user.id === newId)) {
-    newId = generateId();
-  }
-  return newId;
-};
-
-// API Routes
-app.listen(BACKEND_PORT, () => {
-  console.log("Server is running on port " + BACKEND_PORT);
-});
+const router = express.Router();
 
 // Route to get word lists of a user
-app.get("/api/users/:id/wordlists", (req, res) => {
+router.get("/:id/wordlists", (req, res) => {
   const userId = parseInt(req.params.id);
   const user = users.find((u) => u.id === userId);
 
@@ -73,12 +22,11 @@ app.get("/api/users/:id/wordlists", (req, res) => {
     user.wordLists.includes(list.id)
   );
 
-  // Since words are directly included in the wordLists, we don't need to populate them
   res.json(userWordLists);
 });
 
 // Route to get a list of all users
-app.get("/api/users", (req, res) => {
+router.get("/", (req, res) => {
   readUsers((err, users) => {
     if (err) {
       res.status(500).json({ error: "Failed to read user data" });
@@ -89,7 +37,7 @@ app.get("/api/users", (req, res) => {
 });
 
 // Route to register a new user
-app.post("/api/users/register", (req, res) => {
+router.post("/register", (req, res) => {
   const { nickname, password } = req.body;
 
   readUsers((err, users) => {
@@ -119,7 +67,7 @@ app.post("/api/users/register", (req, res) => {
 });
 
 // Update nickname
-app.patch("/api/users/:id/nickname", (req, res) => {
+router.patch("/:id/nickname", (req, res) => {
   const { id } = req.params;
   const { newNickname } = req.body;
 
@@ -154,7 +102,7 @@ app.patch("/api/users/:id/nickname", (req, res) => {
 });
 
 // Update password
-app.patch("/api/users/:id/password", (req, res) => {
+router.patch("/:id/password", (req, res) => {
   const { id } = req.params;
   const { newPassword } = req.body;
 
@@ -182,7 +130,4 @@ app.patch("/api/users/:id/password", (req, res) => {
   });
 });
 
-// Test route
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Hello from the API!" });
-});
+module.exports = router;
