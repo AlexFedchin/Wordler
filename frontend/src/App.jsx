@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Play from "./pages/Play";
 import Profile from "./pages/Profile";
 import WordLists from "./pages/WordLists";
+import WordListEditPage from "./pages/WordListEditPage";
 import Registration from "./pages/Registration";
 import { Box } from "@mui/material";
 import { UserProvider } from "./UserContext";
@@ -32,6 +33,10 @@ function App() {
               <Route path="/register" element={<Registration />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/wordlists" element={<WordLists />} />
+              <Route
+                path="/wordlists/:id/edit"
+                element={<WordListEditPage />}
+              />
               <Route path="/play" element={<Play />} />
               <Route path="/" element={<Home />} />
             </Routes>
