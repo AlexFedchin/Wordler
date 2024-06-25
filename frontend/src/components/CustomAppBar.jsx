@@ -14,7 +14,7 @@ import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
 import Circle from "@mui/icons-material/Circle";
 import Logout from "@mui/icons-material/LogoutOutlined";
 import Login from "@mui/icons-material/LoginOutlined";
-import Register from "@mui/icons-material/AppRegistrationOutlined";
+import Register from "@mui/icons-material/PersonAddOutlined";
 import ManageProfile from "@mui/icons-material/ManageAccountsOutlined";
 import WordLists from "@mui/icons-material/AssignmentOutlined";
 import { useUser } from "../UserContext";
