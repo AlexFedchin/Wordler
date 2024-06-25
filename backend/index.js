@@ -2,8 +2,9 @@ const express = require("express");
 const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
-
 const app = express();
+const users = require("./data/users.json");
+const wordLists = require("./data/wordLists.json");
 const BACKEND_PORT = 8000;
 
 // Allow requests from the frontend domain
@@ -44,14 +45,36 @@ const writeUsers = (users, callback) => {
   });
 };
 
+// Helper function to assign a new user unique ID
+const generateUniqueId = (users) => {
+  const generateId = () => Math.floor(100000 + Math.random() * 900000);
+  let newId = generateId();
+  while (users.some((user) => user.id === newId)) {
+    newId = generateId();
+  }
+  return newId;
+};
+
 // API Routes
 app.listen(BACKEND_PORT, () => {
   console.log("Server is running on port " + BACKEND_PORT);
 });
 
-// Test route
-app.get("/api/test", (req, res) => {
-  res.json({ message: "Hello from the API!" });
+// Route to get word lists of a user
+app.get("/api/users/:id/wordlists", (req, res) => {
+  const userId = parseInt(req.params.id);
+  const user = users.find((u) => u.id === userId);
+
+  if (!user) {
+    return res.status(404).send("User not found");
+  }
+
+  const userWordLists = wordLists.filter((list) =>
+    user.wordLists.includes(list.id)
+  );
+
+  // Since words are directly included in the wordLists, we don't need to populate them
+  res.json(userWordLists);
 });
 
 // Route to get a list of all users
@@ -65,17 +88,8 @@ app.get("/api/users", (req, res) => {
   });
 });
 
-const generateUniqueId = (users) => {
-  const generateId = () => Math.floor(100000 + Math.random() * 900000);
-  let newId = generateId();
-  while (users.some((user) => user.id === newId)) {
-    newId = generateId();
-  }
-  return newId;
-};
-
 // Route to register a new user
-app.post("/api/register", (req, res) => {
+app.post("/api/users/register", (req, res) => {
   const { nickname, password } = req.body;
 
   readUsers((err, users) => {
@@ -166,4 +180,9 @@ app.patch("/api/users/:id/password", (req, res) => {
       }
     });
   });
+});
+
+// Test route
+app.get("/api/test", (req, res) => {
+  res.json({ message: "Hello from the API!" });
 });

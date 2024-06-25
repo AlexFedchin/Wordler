@@ -2,31 +2,37 @@
   {
     "id": 1,
     "nickname": "user1",
-    "password": "password1"
+    "password": "password1",
+    "wordLists": []
   },
   {
     "id": 2,
     "nickname": "user2",
-    "password": "password2"
+    "password": "password2",
+    "wordLists": []
   },
   {
     "id": 3,
     "nickname": "user3",
-    "password": "password3"
+    "password": "password3",
+    "wordLists": []
   },
   {
     "id": 330674,
     "nickname": "user4",
-    "password": "password4"
+    "password": "password4",
+    "wordLists": []
   },
   {
     "id": 249653,
     "nickname": "user5",
-    "password": "password5"
+    "password": "password5",
+    "wordLists": []
   },
   {
     "id": 746580,
     "nickname": "TrigerChat",
-    "password": "trigeR105"
+    "password": "trigeR105",
+    "wordLists": [153548625, 153782673]
   }
 ]

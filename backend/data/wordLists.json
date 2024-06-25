@@ -1,0 +1,78 @@
+[
+  {
+    "id": 153548625,
+    "title": "list1",
+    "originLanguage": "English",
+    "targetLanguage": "Finnish",
+    "words": [
+      {
+        "id": 123456789,
+        "originWord": "apple",
+        "targetWord": "omena"
+      },
+      {
+        "id": 123456112,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12344124,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12344613,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12531513,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12553533,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      }
+    ]
+  },
+  {
+    "id": 153782673,
+    "title": "list2",
+    "originLanguage": "English",
+    "targetLanguage": "Finnish",
+    "words": [
+      {
+        "id": 123456789,
+        "originWord": "apple",
+        "targetWord": "omena"
+      },
+      {
+        "id": 123456112,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12344124,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12344613,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12531513,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      },
+      {
+        "id": 12553533,
+        "originWord": "table",
+        "targetWord": "pöytä"
+      }
+    ]
+  }
+]
