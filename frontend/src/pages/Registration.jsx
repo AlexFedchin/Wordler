@@ -25,10 +25,13 @@ function Registration() {
     setLoading(true);
 
     try {
-      const response = await axios.post(`${config.API_BASE_URL}register/`, {
-        nickname,
-        password,
-      });
+      const response = await axios.post(
+        `${config.API_BASE_URL}users/register/`,
+        {
+          nickname,
+          password,
+        }
+      );
 
       if (response.status === 201) {
         console.log("Registration successful");
