@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
-import {
-  Container,
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  IconButton,
-} from "@mui/material";
+import { Container, IconButton } from "@mui/material";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import { useUser } from "../UserContext";
 import config from "../config";
 import SectionSubheading from "../components/SectionSubheading";
+import WordListCard from "../components/WordListCard";
 
 const WordLists = () => {
   const { user } = useUser();
@@ -32,12 +26,8 @@ const WordLists = () => {
     fetchWordLists();
   }, [user.id]);
 
-  const handleCardClick = (listId) => {
-    // Navigate to the edit page for the specific list
-    // history.push(`/wordLists/${listId}/edit`);
-  };
-
   return (
+    // Global container for vertical alignment
     <Container
       sx={{
         padding: "24px",
@@ -50,6 +40,8 @@ const WordLists = () => {
       }}
     >
       <SectionSubheading text="Word Lists" />
+
+      {/* Container for cards*/}
       <Container
         sx={{
           display: "flex",
@@ -62,104 +54,10 @@ const WordLists = () => {
         }}
       >
         {wordLists.map((list) => (
-          <Card
-            key={list.id}
-            sx={{
-              width: "300px",
-              cursor: "pointer",
-              bgcolor: "var(--off-white-color)",
-              borderRadius: "10px",
-              transition: "all 0.3s ease",
-              "&:hover": {
-                opacity: 0.9,
-              },
-            }}
-            onClick={() => handleCardClick(list.id)}
-          >
-            <CardContent sx={{ mx: 2 }}>
-              <Typography
-                align="center"
-                sx={{
-                  fontSize: "x-large",
-                  color: "var(--off-black-color)",
-                  fontFamily: "AccentFont",
-                  fontWeight: 900,
-                }}
-              >
-                {list.title}
-              </Typography>
-              <Box
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginBottom: "16px",
-                }}
-              >
-                <Typography
-                  sx={{
-                    color: "var(--accent-color)",
-                    fontFamily: "TextFont",
-                    fontSize: "x-large",
-                    fontWeight: 700,
-                  }}
-                >
-                  {list.originLanguage}
-                </Typography>
-                <Typography
-                  sx={{
-                    color: "var(--accent-color)",
-                    fontFamily: "TextFont",
-                    fontSize: "x-large",
-                    fontWeight: 700,
-                  }}
-                >
-                  {list.targetLanguage}
-                </Typography>
-              </Box>
-              <Box>
-                {list.words.slice(0, 5).map((word, index) => (
-                  <Box
-                    key={index}
-                    sx={{ display: "flex", justifyContent: "space-between" }}
-                  >
-                    <Typography
-                      sx={{
-                        fontFamily: "TextFont",
-                        fontSize: "large",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {word.originWord}
-                    </Typography>
-                    <Typography
-                      sx={{
-                        fontFamily: "TextFont",
-                        fontSize: "large",
-                        fontWeight: 600,
-                      }}
-                    >
-                      {word.targetWord}
-                    </Typography>
-                  </Box>
-                ))}
-                {list.words.length > 5 && (
-                  <Typography
-                    sx={{
-                      mt: 2,
-                      textAlign: "center",
-                      color: "var(--accent-color)",
-                      fontFamily: "TextFont",
-                      fontSize: "large",
-                    }}
-                  >
-                    + {list.words.length - 5} more
-                  </Typography>
-                )}
-              </Box>
-            </CardContent>
-          </Card>
+          <WordListCard key={list.id} list={list} />
         ))}
 
+        {/* Plus icon to add a new list */}
         <IconButton
           sx={{
             display: "flex",
