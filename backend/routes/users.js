@@ -1,9 +1,6 @@
 const express = require("express");
-const {
-  readUsers,
-  writeUsers,
-  generateUniqueId,
-} = require("../utils/fileUtils");
+const { readUsers, writeUsers } = require("../utils/fileUtils");
+const { generateUniqueId } = require("../utils/userUtils");
 const users = require("../data/users.json");
 const wordLists = require("../data/wordLists.json");
 
