@@ -33,6 +33,19 @@
     "id": 746580,
     "nickname": "TrigerChat",
     "password": "trigeR105",
-    "wordLists": [153548625, 153782673]
+    "wordLists": [
+      153548625,
+      153782673
+    ]
+  },
+  {
+    "id": 484513,
+    "nickname": "alex_fdchn",
+    "password": "1234567"
+  },
+  {
+    "id": 708773,
+    "nickname": "juja_ulya",
+    "password": "Jujaulya2212"
   }
 ]
