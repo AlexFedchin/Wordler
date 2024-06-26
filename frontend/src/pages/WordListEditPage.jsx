@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Container, TextField, Box, Typography, Button } from "@mui/material";
+import { Container, Box, IconButton } from "@mui/material";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import axios from "axios";
 import config from "../config";
+import SectionSubheading from "../components/SectionSubheading";
+import UnderlinedTextField from "../components/UnderlinedTextField"; // Import the new component
+import FilledButton from "../components/FilledButton";
 
 const WordListEditPage = () => {
   const { id } = useParams();
@@ -61,7 +65,7 @@ const WordListEditPage = () => {
     navigate("/wordLists");
   };
 
-  if (!wordList) return <Typography>Loading...</Typography>;
+  if (!wordList) return <SectionSubheading text={"Loading..."} />;
 
   return (
     <Container
@@ -74,57 +78,68 @@ const WordListEditPage = () => {
         alignItems: "center",
       }}
     >
-      <TextField
-        label="List Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Origin Language"
-        value={originLanguage}
-        onChange={(e) => setOriginLanguage(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Target Language"
-        value={targetLanguage}
-        onChange={(e) => setTargetLanguage(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
+      <Box width={"40%"}>
+        <UnderlinedTextField
+          label="List Title"
+          centered="true"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+        />
+      </Box>
+
       <Box sx={{ width: "100%", marginTop: 2 }}>
+        <Box sx={{ display: "flex", gap: 10, marginBottom: 2 }}>
+          <UnderlinedTextField
+            label="Origin Language"
+            value={originLanguage}
+            onChange={(e) => setOriginLanguage(e.target.value)}
+          />
+          <UnderlinedTextField
+            label="Target Language"
+            value={targetLanguage}
+            onChange={(e) => setTargetLanguage(e.target.value)}
+          />
+        </Box>
         {words.map((word, index) => (
-          <Box key={index} sx={{ display: "flex", gap: 2, marginBottom: 2 }}>
-            <TextField
-              label="Origin Word"
+          <Box key={index} sx={{ display: "flex", gap: 20, marginBottom: 2 }}>
+            <UnderlinedTextField
+              label=""
               value={word.originWord}
               onChange={(e) =>
                 handleWordChange(index, "originWord", e.target.value)
               }
-              fullWidth
             />
-            <TextField
-              label="Target Word"
+            <UnderlinedTextField
+              label=""
               value={word.targetWord}
               onChange={(e) =>
                 handleWordChange(index, "targetWord", e.target.value)
               }
-              fullWidth
             />
           </Box>
         ))}
       </Box>
-      <Button
-        variant="contained"
-        color="primary"
+      {/* Plus icon to add a new list */}
+      <IconButton
+        sx={{
+          display: "flex",
+          justifyContent: "center",
+          alignSelf: "center",
+        }}
         onClick={handleAddWord}
-        sx={{ marginTop: 2 }}
       >
-        Add Word
-      </Button>
+        <AddCircleOutlineIcon
+          sx={{
+            color: "var(--accent-color)",
+            fontSize: "64px",
+            transition: "all 0.3s ease",
+            "&:hover": {
+              filter:
+                "drop-shadow(0 0 4px var(--accent-color)) drop-shadow(0 0 18px var(--accent-color))",
+            },
+          }}
+        />
+      </IconButton>
       <Box
         sx={{
           display: "flex",
@@ -133,12 +148,16 @@ const WordListEditPage = () => {
           marginTop: 4,
         }}
       >
-        <Button variant="contained" color="secondary" onClick={handleCancel}>
+        <FilledButton
+          onClick={handleCancel}
+          width={"49%"}
+          mainColor="var(--error-color)"
+        >
           Cancel
-        </Button>
-        <Button variant="contained" color="primary" onClick={handleSave}>
+        </FilledButton>
+        <FilledButton onClick={handleSave} width={"49%"}>
           Save
-        </Button>
+        </FilledButton>
       </Box>
     </Container>
   );
