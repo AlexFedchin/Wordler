@@ -10,7 +10,7 @@ const CustomTextField = ({
   type = "text",
   showPassword = false,
   onToggleShowPassword,
-  onKeyDown, // Add onKeyDown prop
+  onKeyDown,
   ...props
 }) => {
   return (
@@ -77,16 +77,16 @@ const CustomTextField = ({
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--accent-color)",
         },
-        // Input text color
+        // Input text styles
         "& .MuiInputBase-input": {
           color: "var(--off-white-color)",
           fontFamily: "TextFont",
           fontSize: "large",
         },
         // Autofill background color fix
-        "&:-webkit-autofill": {
-          "-webkit-box-shadow": "0 0 0 100px #121212 inset !important",
-          "-webkit-text-fill-color": "var(--off-white-color) !important",
+        "&:WebkitAutofill": {
+          WebkitBoxShadow: "0 0 0 100px #121212 inset !important",
+          WebkitTextFillColor: "transparent !important",
         },
       }}
       {...props}
