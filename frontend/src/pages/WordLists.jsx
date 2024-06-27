@@ -46,9 +46,10 @@ const WordLists = () => {
         sx={{
           display: "flex",
           flexDirection: "row",
-          alignItems: "flex-start",
-          justifyContent: "flex-start",
+          alignItems: "flex-center",
+          justifyContent: "flex-center",
           flexWrap: "wrap",
+          width: "fit-content",
           gap: 4,
           padding: "24px",
         }}
