@@ -50,7 +50,7 @@ const WordListCard = ({ list }) => {
               fontWeight: 700,
             }}
           >
-            {list.originLanguage}
+            {list.nativeLanguage}
           </Typography>
           <Typography
             sx={{
@@ -60,7 +60,7 @@ const WordListCard = ({ list }) => {
               fontWeight: 700,
             }}
           >
-            {list.targetLanguage}
+            {list.foreignLanguage}
           </Typography>
         </Box>
         <Box>
@@ -76,7 +76,7 @@ const WordListCard = ({ list }) => {
                   fontWeight: 600,
                 }}
               >
-                {word.originWord}
+                {word.nativeWord}
               </Typography>
               <Typography
                 sx={{
@@ -85,7 +85,7 @@ const WordListCard = ({ list }) => {
                   fontWeight: 600,
                 }}
               >
-                {word.targetWord}
+                {word.foreignWord}
               </Typography>
             </Box>
           ))}
