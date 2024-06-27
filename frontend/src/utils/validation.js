@@ -25,3 +25,54 @@ export const validatePassword = (password) => {
   }
   return "";
 };
+
+export const validateWordListForm = (words) => {
+  if (words.length < config.wordListMinLength) {
+    return `There must be at least ${config.wordListMinLength} word pairs in the list.`;
+  }
+
+  for (const word of words) {
+    if (
+      !word.nativeWord.trim() ||
+      !word.foreignWord.trim() ||
+      word.foreignWord.startsWith(" ") ||
+      word.nativeWord.startsWith(" ")
+    ) {
+      return "All word pairs must be filled and cannot contain only spaces or start with a space.";
+    }
+  }
+
+  return "";
+};
+
+export const validateWordListTitle = (title) => {
+  if (title === "") {
+    return "Title cannot be empty.";
+  }
+
+  if ((!title.trim() && title !== "") || title.startsWith(" ")) {
+    return "Title cannot contain only spaces or start with a space.";
+  }
+
+  if (title.length > config.wordListTitleMaxLength) {
+    return `Title should be no more than ${config.wordListTitleMaxLength} characters long.`;
+  }
+
+  return "";
+};
+
+export const validateWordListLanguage = (language) => {
+  if (language === "") {
+    return "Language cannot be empty.";
+  }
+
+  if ((!language.trim() && language !== "") || language.startsWith(" ")) {
+    return "Language cannot contain only spaces or start with a space.";
+  }
+
+  if (language.length > config.wordListLanguageMaxLength) {
+    return `Language should be no more than ${config.wordListLanguageMaxLength} characters long.`;
+  }
+
+  return "";
+};
