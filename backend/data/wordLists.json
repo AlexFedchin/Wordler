@@ -1,77 +1,69 @@
 [
   {
     "id": 153548625,
-    "title": "list1",
-    "originLanguage": "English",
-    "targetLanguage": "Finnish",
+    "title": "Test List",
+    "nativeLanguage": "English",
+    "foreignLanguage": "Finnish",
     "words": [
       {
-        "id": 123456789,
-        "originWord": "apple",
-        "targetWord": "omena"
+        "nativeWord": "apple",
+        "foreignWord": "omena"
       },
       {
-        "id": 123456112,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12344124,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12344613,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12531513,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12553533,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
+      },
+      {
+        "nativeWord": "jfhcjglgcl",
+        "foreignWord": "gfx,kx,"
       }
     ]
   },
   {
     "id": 153782673,
     "title": "list2",
-    "originLanguage": "English",
-    "targetLanguage": "Finnish",
+    "nativeLanguage": "English",
+    "foreignLanguage": "Finnish",
     "words": [
       {
-        "id": 123456789,
-        "originWord": "apple",
-        "targetWord": "omena"
+        "nativeWord": "apple",
+        "foreignWord": "omena"
       },
       {
-        "id": 123456112,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12344124,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12344613,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12531513,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       },
       {
-        "id": 12553533,
-        "originWord": "table",
-        "targetWord": "pöytä"
+        "nativeWord": "table",
+        "foreignWord": "pöytä"
       }
     ]
   }
