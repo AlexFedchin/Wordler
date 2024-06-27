@@ -5,6 +5,7 @@ const FilledButton = ({
   text,
   onClick,
   width = 300,
+  height,
   fontSize = "20px",
   mt = "8px",
   mr = "0px",
@@ -21,6 +22,7 @@ const FilledButton = ({
       onClick={!disabled ? onClick : undefined}
       sx={{
         mt: 7,
+        height: height && height,
         width: width,
         fontFamily: "ButtonFont",
         fontSize: fontSize,
