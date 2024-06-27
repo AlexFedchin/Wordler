@@ -20,7 +20,9 @@ const UnderlinedTextField = ({
         centered
           ? {
               style: {
-                transform: "translate(255%, -5px) scale(1)",
+                transform: "translate(-50%, -5px) scale(1)",
+                left: "50%",
+                textAlign: "center",
                 display: "flex",
                 alignItems: "center",
                 fontFamily: "AccentFont",
@@ -43,46 +45,37 @@ const UnderlinedTextField = ({
           : {}
       }
       sx={{
-        // Underline styles
-        "& .MuiInput-underline:before": {
-          borderBottomColor: "var(--off-white-color)",
-          borderBottomWidth: "default",
-        },
-        "&:hover .MuiInput-underline:before": {
-          borderBottomColor: "var(--darker-accent-color)",
-          borderBottomWidth: "1px",
-          transition: "0.3s ease",
-        },
-        "& .MuiInput-underline:after": {
-          borderBottomColor: "var(--accent-color)",
-        },
-        "& .MuiInput-underline.Mui-disabled:before": {
-          borderBottomColor: "var(--off-white-color)",
-        },
         // Label styles
         "& .MuiInputLabel-root": {
-          color: "var(--off-white-color)",
           fontFamily: "TextFont",
           fontSize: "large",
-          transition: "all 0.3s ease",
-        },
-        "&:hover .MuiInputLabel-root": {
-          color: "var(--darker-accent-color)",
+          color: "var(--off-white-color)",
+          transition: "color 0.3s ease",
         },
         "& .MuiInputLabel-root.Mui-focused": {
           color: "var(--accent-color)",
         },
-        // Input text color
+        // Input text styles
         "& .MuiInputBase-input": {
-          color: "var(--off-white-color)",
           fontFamily: "TextFont",
           fontSize: "large",
+          color: "var(--off-white-color)",
         },
-        // Autofill background color fix
-        "&:-webkit-autofill": {
-          "-webkit-box-shadow": "0 0 0 100px #121212 inset !important",
-          "-webkit-text-fill-color": "var(--off-white-color) !important",
+        // Underline styles
+        "& .MuiInput-underline:before": {
+          borderBottom: "1px solid var(--off-white-color)",
+          transition: "border-bottom-color 0.3s ease",
         },
+        "&:hover .MuiInput-underline:before": {
+          borderBottom: "1px solid var(--darker-accent-color)",
+        },
+        "& .MuiInput-underline:after": {
+          borderBottom: "1px solid var(--accent-color)",
+        },
+        // // Hover state for both underline and label
+        // "&:hover .MuiInputLabel-root:not(.Mui-focused)": {
+        //   color: "var(--darker-accent-color)",
+        // },
       }}
       {...props}
     />
