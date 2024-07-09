@@ -37,11 +37,11 @@ const CustomAppBar = () => {
         })
         .catch((error) => {
           console.error("Error fetching data:", error);
-          setData(null); // Set to null if there's an error
+          setData(null);
         });
     };
 
-    fetchData(); // Initial fetch
+    fetchData();
     const intervalId = setInterval(fetchData, 5000); // Fetch every 5 seconds
 
     return () => clearInterval(intervalId); // Cleanup interval on unmount

@@ -1,7 +1,10 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-
+////////// THIS COMPONENT IS NOT /////////////
+////////// USED ANYWHERE NOW AND /////////////
+////////// IS KEPT FOR POSSIBLE //////////////
+/////////////// FUTURE USE ///////////////////
 const Sidebar = () => {
   const navigate = useNavigate();
 

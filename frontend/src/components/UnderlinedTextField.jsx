@@ -72,10 +72,6 @@ const UnderlinedTextField = ({
         "& .MuiInput-underline:after": {
           borderBottom: "1px solid var(--accent-color)",
         },
-        // // Hover state for both underline and label
-        // "&:hover .MuiInputLabel-root:not(.Mui-focused)": {
-        //   color: "var(--darker-accent-color)",
-        // },
       }}
       {...props}
     />

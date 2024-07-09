@@ -20,7 +20,7 @@ function App() {
           <CustomAppBar />
           <Box
             sx={{
-              mt: 12,
+              mt: 10,
               width: "100%",
               paddingLeft: "2%",
               paddingRight: "2%",

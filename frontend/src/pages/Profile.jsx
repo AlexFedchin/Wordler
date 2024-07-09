@@ -7,7 +7,6 @@ import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
 import config from "../config";
 import { validateNickname, validatePassword } from "../utils/validation";
-// import Sidebar from "../components/Sidebar";
 
 const Profile = () => {
   const { user, setUser } = useUser();
