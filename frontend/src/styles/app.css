@@ -2,7 +2,7 @@
 @import "./fonts.css";
 
 body {
-  background: url("../../public/images/BG.jpg") no-repeat top center;
+  background: url("../../public/images/BG.webp") no-repeat top center;
   background-size: 100% auto; /* Ensures the width is always 100% of the viewport */
   margin: 0;
   padding: 0;
