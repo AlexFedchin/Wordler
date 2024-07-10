@@ -1,6 +1,7 @@
 # Wordler
 
 An _easy_ way to learn _difficult_ words.
+
 ![Wordler Logo](frontend/public/favicon.ico)
 
 ## Description
