@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import config from "../config";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import config from '../config';
 import {
   AppBar,
   Toolbar,
@@ -8,18 +8,18 @@ import {
   Box,
   IconButton,
   Menu,
-} from "@mui/material";
-import AccountCircle from "@mui/icons-material/AccountCircle";
-import AccountCircleOutlined from "@mui/icons-material/AccountCircleOutlined";
-import Circle from "@mui/icons-material/Circle";
-import Logout from "@mui/icons-material/LogoutOutlined";
-import Login from "@mui/icons-material/LoginOutlined";
-import Register from "@mui/icons-material/PersonAddOutlined";
-import ManageProfile from "@mui/icons-material/ManageAccountsOutlined";
-import WordLists from "@mui/icons-material/AssignmentOutlined";
-import { useUser } from "../UserContext";
-import { useNavigate } from "react-router-dom";
-import CustomMenuItem from "./CustomMenuItem";
+} from '@mui/material';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import AccountCircleOutlined from '@mui/icons-material/AccountCircleOutlined';
+import Circle from '@mui/icons-material/Circle';
+import Logout from '@mui/icons-material/LogoutOutlined';
+import Login from '@mui/icons-material/LoginOutlined';
+import Register from '@mui/icons-material/PersonAddOutlined';
+import ManageProfile from '@mui/icons-material/ManageAccountsOutlined';
+import WordLists from '@mui/icons-material/AssignmentOutlined';
+import { useUser } from '../UserContext';
+import { useNavigate } from 'react-router-dom';
+import CustomMenuItem from './CustomMenuItem';
 
 const CustomAppBar = () => {
   const { user, setUser } = useUser();
@@ -31,12 +31,12 @@ const CustomAppBar = () => {
   useEffect(() => {
     const fetchData = () => {
       axios
-        .get(config.API_BASE_URL + "test/")
+        .get(config.API_BASE_URL + 'test/')
         .then((response) => {
           setData(response.data);
         })
         .catch((error) => {
-          console.error("Error fetching data:", error);
+          console.error('Error fetching data:', error);
           setData(null);
         });
     };
@@ -57,85 +57,57 @@ const CustomAppBar = () => {
     setAnchorEl(null);
   };
 
-  // Function for the "My Profile" button
-  const handleMyProfile = () => {
-    setAnchorEl(null);
-    navigate("/profile");
-  };
-
-  // Function for the "Word Lists" button
-  const handleWordLists = () => {
-    setAnchorEl(null);
-    navigate("/wordlists");
-  };
-
-  // Function for the Logout button
-  const handleLogout = () => {
-    setAnchorEl(null);
-    setUser(null);
-    navigate("/");
-  };
-
-  // Function for the "Login" button
-  const handleLogin = () => {
-    setAnchorEl(null);
-    navigate("/login");
-  };
-
-  // Function for the "Register" button
-  const handleRegister = () => {
-    setAnchorEl(null);
-    navigate("/register");
+  // Function to navigate user according to menu options chosen
+  const handleNavigate = (path) => {
+    handleDropdownClose();
+    navigate(path);
   };
 
   return (
     <AppBar
       position="fixed"
       sx={{
-        backgroundColor: "var(--black-color)",
-        borderRadius: "10px",
-        width: "98%",
-        left: "50%",
-        transform: "translateX(-50%)",
-        top: "18px",
+        backgroundColor: 'var(--black-color)',
+        height: '80px',
         zIndex: 1000,
       }}
     >
       <Toolbar
         sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          height: '100%',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
         }}
       >
         <Box sx={{ flex: 1 }} />
         {/* Indicator that the API works fine */}
         <Box
           sx={{
-            display: "flex",
-            alignItems: "center",
+            display: 'flex',
+            alignItems: 'center',
             gap: 1,
-            position: "absolute",
-            left: "10%",
-            transform: "translateX(-50%)",
+            position: 'absolute',
+            left: '10%',
+            transform: 'translateX(-50%)',
           }}
         >
           <Typography
             sx={{
-              fontFamily: "TextFont",
-              fontSize: "x-large",
+              fontFamily: 'TextFont',
+              fontSize: 'x-large',
               fontWeight: 500,
-              marginRight: "4px",
-              marginTop: "2px",
-              cursor: "default",
+              marginRight: '4px',
+              marginTop: '2px',
+              cursor: 'default',
             }}
           >
             API
           </Typography>
           <Circle
             sx={{
-              color: data ? "var(--accent-color)" : "var(--error-color)",
-              fontSize: "1.3rem",
+              color: data ? 'var(--accent-color)' : 'var(--error-color)',
+              fontSize: '1.3rem',
             }}
           />
         </Box>
@@ -143,20 +115,20 @@ const CustomAppBar = () => {
         {/* Website main heading */}
         <Typography
           onClick={() => {
-            navigate("/");
+            navigate('/');
           }}
           sx={{
-            fontSize: "2.2rem",
+            fontSize: '2.2rem',
             fontWeight: 700,
-            color: "var(--off-white-color)",
-            marginTop: "10px",
-            marginBottom: "10px",
-            fontFamily: "AccentFont",
-            textDecoration: "none",
-            position: "absolute",
-            left: "50%",
-            transform: "translateX(-50%)",
-            cursor: "pointer",
+            color: 'var(--off-white-color)',
+            marginTop: '10px',
+            marginBottom: '10px',
+            fontFamily: 'AccentFont',
+            textDecoration: 'none',
+            position: 'absolute',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            cursor: 'pointer',
           }}
         >
           WORDLER
@@ -166,12 +138,12 @@ const CustomAppBar = () => {
         <IconButton
           onClick={handleDropdownOpen}
           sx={{
-            marginLeft: "auto",
-            marginRight: "15vw",
+            marginLeft: 'auto',
+            marginRight: '15vw',
             padding: 1,
-            "& .MuiSvgIcon-root": {
-              fontSize: "2rem",
-              color: "var(--off-white-color)",
+            '& .MuiSvgIcon-root': {
+              fontSize: '2rem',
+              color: 'var(--off-white-color)',
             },
           }}
         >
@@ -181,12 +153,12 @@ const CustomAppBar = () => {
           {user && (
             <Typography
               sx={{
-                fontSize: "x-large",
+                fontSize: 'x-large',
                 fontWeight: 500,
-                color: "var(--off-white-color)",
-                fontFamily: "TextFont",
-                marginLeft: "8px",
-                cursor: "pointer",
+                color: 'var(--off-white-color)',
+                fontFamily: 'TextFont',
+                marginLeft: '8px',
+                cursor: 'pointer',
               }}
             >
               {user.nickname}
@@ -201,10 +173,10 @@ const CustomAppBar = () => {
           onClose={handleDropdownClose}
           PaperProps={{
             sx: {
-              backgroundColor: "var(--black-color)",
-              color: "var(--off-white-color)",
-              borderRadius: "10px",
-              width: "200px",
+              backgroundColor: 'var(--black-color)',
+              color: 'var(--off-white-color)',
+              borderRadius: '10px',
+              width: '200px',
             },
           }}
         >
@@ -213,19 +185,26 @@ const CustomAppBar = () => {
                 <CustomMenuItem
                   key="profile"
                   title="My Profile"
-                  onClick={handleMyProfile}
+                  onClick={() => {
+                    handleNavigate('/profile');
+                  }}
                   icon={<ManageProfile />}
                 />,
                 <CustomMenuItem
                   key="wordlists"
                   title="Word Lists"
-                  onClick={handleWordLists}
+                  onClick={() => {
+                    handleNavigate('/wordlists');
+                  }}
                   icon={<WordLists />}
                 />,
                 <CustomMenuItem
                   key="logout"
                   title="Logout"
-                  onClick={handleLogout}
+                  onClick={() => {
+                    handleNavigate('/');
+                    setUser(null);
+                  }}
                   color="var(--error-color)"
                   icon={<Logout />}
                 />,
@@ -234,13 +213,17 @@ const CustomAppBar = () => {
                 <CustomMenuItem
                   key="login"
                   title="Login"
-                  onClick={handleLogin}
+                  onClick={() => {
+                    handleNavigate('/login');
+                  }}
                   icon={<Login />}
                 />,
                 <CustomMenuItem
                   key="register"
                   title="Register"
-                  onClick={handleRegister}
+                  onClick={() => {
+                    handleNavigate('/register');
+                  }}
                   icon={<Register />}
                 />,
               ]}
