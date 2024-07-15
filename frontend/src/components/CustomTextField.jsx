@@ -1,15 +1,16 @@
-import React from 'react';
-import { TextField, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import React from "react";
+import { TextField, InputAdornment, IconButton } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const CustomTextField = ({
   label,
   value,
   onChange,
-  mb = '4px',
-  type = 'text',
+  mb = "4px",
+  type = "text",
   showPassword = false,
   onToggleShowPassword,
+  disabled = false,
   onKeyDown,
   ...props
 }) => {
@@ -24,11 +25,13 @@ const CustomTextField = ({
       onChange={onChange}
       type={type}
       onKeyDown={onKeyDown}
+      disabled={disabled}
       InputProps={
-        label === 'Password' ||
-        label === 'Confirm Password' ||
-        label === 'Current Password' ||
-        label === 'New Password'
+        (label === "Password" ||
+          label === "Confirm Password" ||
+          label === "Current Password" ||
+          label === "New Password") &&
+        !disabled
           ? {
               endAdornment: (
                 <InputAdornment position="end">
@@ -38,8 +41,8 @@ const CustomTextField = ({
                     edge="end"
                     sx={{
                       color: showPassword
-                        ? 'var(--accent-color)'
-                        : 'var(--off-white-color)',
+                        ? "var(--accent-color)"
+                        : "var(--off-white-color)",
                     }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -52,41 +55,52 @@ const CustomTextField = ({
       sx={{
         mb: mb,
         // Border styles
-        '& .MuiOutlinedInput-root': {
-          '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'var(--accent-color)',
+        "& .MuiOutlinedInput-root": {
+          "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+            borderColor: "var(--accent-color)",
           },
-          '&:hover .MuiOutlinedInput-notchedOutline': {
-            borderColor: 'var(--darker-accent-color)',
+          "&:hover .MuiOutlinedInput-notchedOutline": {
+            borderColor: "var(--darker-accent-color)",
           },
         },
-        '& .MuiOutlinedInput-notchedOutline': {
-          borderColor: 'var(--off-white-color)',
-          transition: 'all 0.3s ease',
+        "& .MuiOutlinedInput-notchedOutline": {
+          borderColor: "var(--off-white-color)",
+          transition: "all 0.3s ease",
         },
         // Label styles
-        '& .MuiInputLabel-root': {
-          color: 'var(--off-white-color)',
-          fontFamily: 'TextFont',
-          fontSize: 'large',
-          transition: 'all 0.3s ease',
+        "& .MuiInputLabel-root": {
+          color: "var(--off-white-color)",
+          fontFamily: "TextFont",
+          fontSize: "large",
+          transition: "all 0.3s ease",
         },
-        '&:hover .MuiInputLabel-root': {
-          color: 'var(--darker-accent-color)',
+        "&:hover .MuiInputLabel-root": {
+          color: "var(--darker-accent-color)",
         },
-        '& .MuiInputLabel-root.Mui-focused': {
-          color: 'var(--accent-color)',
+        "& .MuiInputLabel-root.Mui-focused": {
+          color: "var(--accent-color)",
         },
         // Input text styles
-        '& .MuiInputBase-input': {
-          color: 'var(--off-white-color)',
-          fontFamily: 'TextFont',
-          fontSize: 'large',
+        "& .MuiInputBase-input": {
+          color: "var(--off-white-color)",
+          fontFamily: "TextFont",
+          fontSize: "large",
+        },
+        // Disable background color
+        "& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline":
+          {
+            borderColor: "var(--off-black-color)",
+          },
+        "& .MuiInputLabel-root.Mui-disabled": {
+          color: "var(--off-black-color)",
+        },
+        "& .MuiInputBase-input.Mui-disabled": {
+          color: "var(--off-black-color)",
         },
         // Autofill background color fix
-        '&:WebkitAutofill': {
-          WebkitBoxShadow: '0 0 0 100px #121212 inset !important',
-          WebkitTextFillColor: 'transparent !important',
+        "&:WebkitAutofill": {
+          WebkitBoxShadow: "0 0 0 100px #121212 inset !important",
+          WebkitTextFillColor: "transparent !important",
         },
       }}
       {...props}
