@@ -1,70 +1,78 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Container, Typography, Box } from "@mui/material";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
 import SectionSubheading from "../components/SectionSubheading";
 import { useUser } from "../UserContext";
-import axios from "axios";
 import config from "../config";
 import { validateNickname, validatePassword } from "../utils/validation";
 
 function Registration() {
-  const [nickname, setNickname] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [confirmPassword, setConfirmPassword] = React.useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = React.useState(false);
-  const [error, setError] = React.useState("");
-  const [loading, setLoading] = React.useState(false);
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const { setUser } = useUser();
   const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
+    setError("");
 
     try {
-      const response = await axios.post(
-        `${config.API_BASE_URL}users/register/`,
-        {
-          nickname,
-          password,
-        }
-      );
+      const response = await fetch(`${config.API_BASE_URL}users/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nickname, password }),
+      });
 
       if (response.status === 201) {
         console.log("Registration successful");
-        // Login as a newly created user
+
+        // Login as the newly created user
         try {
-          const response = await axios.get(config.API_BASE_URL + "users/");
-          const existingUsers = response.data;
-          console.log("Existing users:", existingUsers);
-          const foundUser = existingUsers.find(
-            (user) => user.nickname === nickname && user.password === password
+          const loginResponse = await fetch(
+            `${config.API_BASE_URL}users/login`,
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({ nickname, password }),
+            }
           );
 
-          if (foundUser) {
-            setUser(foundUser);
-            console.log("Logged in as:", foundUser);
+          if (loginResponse.ok) {
+            const userData = await loginResponse.json();
+            setUser(userData);
+            console.log("Logged in as:", userData);
             navigate("/");
           } else {
             console.log("Error logging in as a created user");
             navigate("/login");
           }
         } catch (error) {
-          console.error("Error fetching data:", error);
+          console.error("Error logging in:", error);
           setError("Something went wrong. Try again later.");
         }
+
         setNickname("");
         setPassword("");
         setConfirmPassword("");
+      } else {
+        const errorData = await response.json();
+        setError(errorData.error || "Something went wrong. Try again later.");
       }
     } catch (error) {
       console.error("Error during registration:", error);
-      setError(
-        error.response?.data?.error || "Something went wrong. Try again later."
-      );
+      setError("Something went wrong. Try again later.");
     } finally {
       setLoading(false);
     }
@@ -93,7 +101,6 @@ function Registration() {
       <SectionSubheading text={"Register a New User"} />
       <Box padding={2} width={"30vw"} maxWidth={"600px"} minWidth={"300px"}>
         <form onSubmit={handleSubmit}>
-          {/* Nickname TextField */}
           <CustomTextField
             label="Nickname"
             value={nickname}
@@ -113,7 +120,6 @@ function Registration() {
             </Typography>
           )}
 
-          {/* Password TextField */}
           <CustomTextField
             label="Password"
             value={password}
@@ -135,7 +141,7 @@ function Registration() {
               {validatePassword(password)}
             </Typography>
           )}
-          {/* Confirm Password TextField */}
+
           <CustomTextField
             label="Confirm Password"
             value={confirmPassword}
@@ -201,7 +207,6 @@ function Registration() {
             isLoading={loading}
             text={"Register"}
           />
-          {/* Row with login suggestion */}
           <Box
             sx={{
               display: "flex",

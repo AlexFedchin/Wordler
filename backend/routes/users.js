@@ -9,17 +9,25 @@ const router = express.Router();
 // Route to get word lists of a user
 router.get("/:id/wordlists", (req, res) => {
   const userId = parseInt(req.params.id);
-  const user = users.find((u) => u.id === userId);
 
-  if (!user) {
-    return res.status(404).send("User not found");
-  }
+  readUsers((err, users) => {
+    if (err) {
+      res.status(500).json({ error: "Failed to read user data" });
+      return;
+    }
 
-  const userWordLists = wordLists.filter((list) =>
-    user.wordLists.includes(list.id)
-  );
+    const user = users.find((u) => u.id === userId);
 
-  res.json(userWordLists);
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const userWordLists = wordLists.filter((list) =>
+      user.wordLists.includes(list.id)
+    );
+
+    res.json(userWordLists);
+  });
 });
 
 // Route to log in a user
@@ -60,7 +68,7 @@ router.post("/register", (req, res) => {
     }
 
     const newUserId = generateUniqueId(users);
-    const newUser = { id: newUserId, nickname, password };
+    const newUser = { id: newUserId, nickname, password, wordLists: [] };
     users.push(newUser);
 
     writeUsers(users, (writeErr) => {
