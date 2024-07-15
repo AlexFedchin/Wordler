@@ -116,6 +116,31 @@ router.patch("/:id/nickname", (req, res) => {
   });
 });
 
+// Route to verify current password
+router.post("/:id/verify-password", (req, res) => {
+  const { id } = req.params;
+  const { currentPassword } = req.body;
+
+  readUsers((err, users) => {
+    if (err) {
+      res.status(500).json({ error: "Failed to read user data" });
+      return;
+    }
+
+    const user = users.find((user) => user.id === parseInt(id));
+    if (!user) {
+      res.status(404).json({ error: "User not found" });
+      return;
+    }
+
+    if (user.password !== currentPassword) {
+      return res.status(401).json({ error: "Password incorrect" });
+    }
+
+    res.status(200).json({ message: "Password correct" });
+  });
+});
+
 // Update password
 router.patch("/:id/password", (req, res) => {
   const { id } = req.params;
