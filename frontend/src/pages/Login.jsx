@@ -52,7 +52,7 @@ function Login() {
   };
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === "Enter" && nickname !== "" && password !== "") {
       handleSubmit(event);
     }
   };
