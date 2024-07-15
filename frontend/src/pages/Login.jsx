@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
@@ -9,10 +8,10 @@ import SectionSubheading from "../components/SectionSubheading";
 import config from "../config";
 
 function Login() {
-  const [nickname, setNickname] = React.useState("");
-  const [password, setPassword] = React.useState("");
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [nickname, setNickname] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const { setUser } = useUser();
   const navigate = useNavigate();
@@ -23,24 +22,26 @@ function Login() {
     setError("");
 
     try {
-      const response = await axios.get(config.API_BASE_URL + "users/");
-      const existingUsers = response.data;
-      console.log("Existing users:", existingUsers);
-      const foundUser = existingUsers.find(
-        (user) => user.nickname === nickname && user.password === password
-      );
+      const response = await fetch(config.API_BASE_URL + "users/login/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nickname, password }),
+      });
 
-      if (foundUser) {
-        setUser(foundUser);
-        setError("Login successful");
-        console.log("Logged in as:", foundUser);
-        navigate("/");
-      } else {
-        setError("Wrong nickname or password");
+      if (!response.ok) {
+        throw new Error("Login failed");
       }
+
+      const data = await response.json();
+      setUser(data);
+      setError("Login successful");
+      console.log("Logged in as:", data);
+      navigate("/");
     } catch (error) {
-      console.error("Error fetching data:", error);
-      setError("Something went wrong. Try again later.");
+      console.error("Error logging in:", error);
+      setError("Wrong nickname or password");
     } finally {
       setLoading(false);
     }
