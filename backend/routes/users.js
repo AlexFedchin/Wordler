@@ -22,14 +22,24 @@ router.get("/:id/wordlists", (req, res) => {
   res.json(userWordLists);
 });
 
-// Route to get a list of all users
-router.get("/", (req, res) => {
+// Route to log in a user
+router.post("/login", (req, res) => {
+  const { nickname, password } = req.body;
+
   readUsers((err, users) => {
     if (err) {
       res.status(500).json({ error: "Failed to read user data" });
-    } else {
-      res.json(users);
+      return;
     }
+
+    const user = users.find(
+      (user) => user.nickname === nickname && user.password === password
+    );
+    if (!user) {
+      return res.status(401).json({ error: "Wrong nickname or password" });
+    }
+
+    res.json({ id: user.id, nickname: user.nickname });
   });
 });
 
