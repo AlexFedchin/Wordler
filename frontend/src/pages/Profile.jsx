@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Container, Typography, Box } from "@mui/material";
-import axios from "axios";
 import { useUser } from "../UserContext";
 import FilledButton from "../components/FilledButton";
 import CustomTextField from "../components/CustomTextField";
@@ -17,31 +16,42 @@ const Profile = () => {
   const [showNewPassword, setShowNewPassword] = useState(false);
   const [currentPasswordCorrect, setCurrentPasswordCorrect] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState("");
+  const [nicknameError, setNicknameError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+  const [nicknameSuccess, setNicknameSuccess] = useState("");
+  const [passwordSuccess, setPasswordSuccess] = useState("");
 
   // Function to send a request for updating nickname
   const handleUpdateNickname = async () => {
     setLoading(true);
-    setError("");
-    setSuccess("");
+    setNicknameError("");
+    setNicknameSuccess("");
 
     try {
-      const response = await axios.patch(
-        config.API_BASE_URL + `users/${user.id}/nickname`,
+      const response = await fetch(
+        `${config.API_BASE_URL}users/${user.id}/nickname`,
         {
-          newNickname: newNickname,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newNickname }),
         }
       );
 
-      if (response.status === 200) {
+      if (response.ok) {
         setUser({ ...user, nickname: newNickname });
-        setSuccess("Nickname updated successfully.");
+        setNicknameSuccess("Nickname updated successfully.");
         setNewNickname("");
+      } else if (response.status === 400) {
+        const data = await response.json();
+        setNicknameError(data.error);
+      } else {
+        throw new Error("Failed to update nickname.");
       }
     } catch (error) {
       console.error("Error updating nickname:", error);
-      setError("Failed to update nickname.");
+      setNicknameError("Failed to update nickname.");
     } finally {
       setLoading(false);
     }
@@ -50,26 +60,64 @@ const Profile = () => {
   // Function to send a request for updating password
   const handleUpdatePassword = async () => {
     setLoading(true);
-    setError("");
-    setSuccess("");
+    setPasswordError("");
+    setPasswordSuccess("");
 
     try {
-      const response = await axios.patch(
-        config.API_BASE_URL + `users/${user.id}/password`,
+      const response = await fetch(
+        `${config.API_BASE_URL}users/${user.id}/password`,
         {
-          newPassword,
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ newPassword }),
         }
       );
 
-      if (response.status === 200) {
-        setSuccess("Password updated successfully.");
-        setUser({ ...user, password: newPassword });
+      if (response.ok) {
+        setPasswordSuccess("Password updated successfully.");
         setNewPassword("");
         setCurrentPasswordCorrect(false);
+      } else {
+        throw new Error("Failed to update password.");
       }
     } catch (error) {
       console.error("Error updating password:", error);
-      setError("Failed to update password.");
+      setPasswordError("Failed to update password.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Function to verify the current password
+  const handleVerifyCurrentPassword = async () => {
+    setLoading(true);
+    setPasswordError("");
+    setPasswordSuccess("");
+
+    try {
+      const response = await fetch(
+        `${config.API_BASE_URL}users/${user.id}/verify-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ currentPassword }),
+        }
+      );
+
+      if (response.ok) {
+        setCurrentPasswordCorrect(true);
+        setCurrentPassword("");
+        setPasswordError("");
+      } else {
+        throw new Error("Password incorrect.");
+      }
+    } catch (error) {
+      console.error("Error verifying current password:", error);
+      setPasswordError("Password incorrect.");
     } finally {
       setLoading(false);
     }
@@ -82,19 +130,6 @@ const Profile = () => {
     setShowNewPassword(!showNewPassword);
   };
 
-  const handleCheckCurrentPassword = () => {
-    if (currentPassword === user.password) {
-      setCurrentPasswordCorrect(true);
-      setCurrentPassword("");
-      setError("");
-      setSuccess("");
-    } else {
-      setError("Password incorrect.");
-      setCurrentPassword("");
-      setSuccess("");
-    }
-  };
-
   const handleKeyPress = (e, action) => {
     if (e.key === "Enter") {
       action();
@@ -103,7 +138,6 @@ const Profile = () => {
 
   return (
     <Container>
-      {/* <Sidebar /> */}
       <Container
         sx={{
           padding: "24px",
@@ -119,8 +153,8 @@ const Profile = () => {
         <SectionSubheading text={"My Profile"} />
 
         <Box padding={2} width={"30vw"} maxWidth={"600px"} minWidth={"300px"}>
+          {/* Form to change nickname */}
           <form>
-            {/* Changing nickname */}
             <Typography
               sx={{
                 fontSize: "large",
@@ -137,6 +171,11 @@ const Profile = () => {
               value={newNickname}
               onChange={(e) => setNewNickname(e.target.value)}
               mb="16px"
+              onKeyDown={
+                newNickname !== "" && validateNickname(newNickname) === ""
+                  ? (e) => handleKeyPress(e, handleUpdateNickname)
+                  : undefined
+              }
             />
             {newNickname !== "" && validateNickname(newNickname) !== "" && (
               <Typography
@@ -166,96 +205,7 @@ const Profile = () => {
               isLoading={loading}
               text={"Update Nickname"}
             />
-
-            {/* Changing password */}
-            <Typography
-              sx={{
-                fontSize: "large",
-                fontWeight: 500,
-                marginTop: "24px",
-                marginBottom: "16px",
-                color: "var(--off-white-color)",
-                fontFamily: "TextFont",
-              }}
-            >
-              Change Password
-            </Typography>
-
-            {currentPasswordCorrect ? (
-              // Input new password to update
-              <>
-                <CustomTextField
-                  label="New Password"
-                  value={newPassword}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                  type={showNewPassword ? "text" : "password"}
-                  showPassword={showNewPassword}
-                  onToggleShowPassword={handleClickShowNewPassword}
-                  onKeyDown={(e) => handleKeyPress(e, handleUpdatePassword)}
-                  mb="16px"
-                />
-                {newPassword !== "" && validatePassword(newPassword) !== "" && (
-                  <Typography
-                    align="left"
-                    width={"100%"}
-                    sx={{
-                      fontSize: "large",
-                      color: "var(--error-color)",
-                      fontFamily: "TextFont",
-                    }}
-                  >
-                    {validatePassword(newPassword)}
-                  </Typography>
-                )}
-                <FilledButton
-                  onClick={handleUpdatePassword}
-                  width="100%"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  mt="16px"
-                  disabled={
-                    newPassword === "" || validatePassword(newPassword) !== ""
-                  }
-                  isLoading={loading}
-                  text={"Update Password"}
-                />
-              </>
-            ) : (
-              // Input current password to check user
-              <>
-                <CustomTextField
-                  label="Current Password"
-                  value={currentPassword}
-                  onChange={(e) => setCurrentPassword(e.target.value)}
-                  type={showCurrentPassword ? "text" : "password"}
-                  showPassword={showCurrentPassword}
-                  onToggleShowPassword={handleClickShowCurrentPassword}
-                  onKeyDown={(e) =>
-                    handleKeyPress(e, handleCheckCurrentPassword)
-                  }
-                  mb="16px"
-                />
-
-                <FilledButton
-                  onClick={handleCheckCurrentPassword}
-                  width="100%"
-                  sx={{
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                  }}
-                  mt="16px"
-                  disabled={currentPassword === ""}
-                  isLoading={loading}
-                  text={"Submit"}
-                />
-              </>
-            )}
-
-            {error && (
+            {nicknameError && (
               <Typography
                 align="center"
                 width={"100%"}
@@ -266,11 +216,11 @@ const Profile = () => {
                   fontFamily: "TextFont",
                 }}
               >
-                {error}
+                {nicknameError}
               </Typography>
             )}
 
-            {success && (
+            {nicknameSuccess && (
               <Typography
                 align="center"
                 width={"100%"}
@@ -281,7 +231,118 @@ const Profile = () => {
                   fontFamily: "TextFont",
                 }}
               >
-                {success}
+                {nicknameSuccess}
+              </Typography>
+            )}
+          </form>
+
+          {/* Form to change password */}
+          <form>
+            <Typography
+              sx={{
+                fontSize: "large",
+                fontWeight: 500,
+                marginTop: 10,
+                marginBottom: "16px",
+                color: "var(--off-white-color)",
+                fontFamily: "TextFont",
+              }}
+            >
+              Change Password
+            </Typography>
+            <CustomTextField
+              label="Current Password"
+              value={currentPassword}
+              onChange={(e) => setCurrentPassword(e.target.value)}
+              type={showCurrentPassword ? "text" : "password"}
+              showPassword={showCurrentPassword}
+              disabled={currentPasswordCorrect ? true : false}
+              onToggleShowPassword={handleClickShowCurrentPassword}
+              onKeyDown={(e) => handleKeyPress(e, handleVerifyCurrentPassword)}
+              mb="16px"
+            />
+
+            <CustomTextField
+              label="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              type={showNewPassword ? "text" : "password"}
+              disabled={currentPasswordCorrect ? false : true}
+              showPassword={showNewPassword}
+              onToggleShowPassword={handleClickShowNewPassword}
+              onKeyDown={(e) => handleKeyPress(e, handleUpdatePassword)}
+              mb="16px"
+            />
+            {newPassword !== "" && validatePassword(newPassword) !== "" && (
+              <Typography
+                align="left"
+                width={"100%"}
+                sx={{
+                  fontSize: "large",
+                  color: "var(--error-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                {validatePassword(newPassword)}
+              </Typography>
+            )}
+            {currentPasswordCorrect ? (
+              <FilledButton
+                onClick={handleUpdatePassword}
+                width="100%"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                mt="16px"
+                disabled={
+                  newPassword === "" || validatePassword(newPassword) !== ""
+                }
+                isLoading={loading}
+                text={"Update Password"}
+              />
+            ) : (
+              <FilledButton
+                onClick={handleVerifyCurrentPassword}
+                width="100%"
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+                mt="16px"
+                disabled={currentPassword === ""}
+                isLoading={loading}
+                text={"Submit"}
+              />
+            )}
+            {passwordError && (
+              <Typography
+                align="center"
+                width={"100%"}
+                sx={{
+                  mt: 2,
+                  fontSize: "x-large",
+                  color: "var(--error-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                {passwordError}
+              </Typography>
+            )}
+            {passwordSuccess && (
+              <Typography
+                align="center"
+                width={"100%"}
+                sx={{
+                  mt: 2,
+                  fontSize: "x-large",
+                  color: "var(--accent-color)",
+                  fontFamily: "TextFont",
+                }}
+              >
+                {passwordSuccess}
               </Typography>
             )}
           </form>
