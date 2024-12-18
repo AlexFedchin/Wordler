@@ -3,11 +3,8 @@ import { Typography } from "@mui/material";
 
 const SectionSubheading = ({
   text,
-  mt = "48px",
-  mr = "0px",
-  ml = "0px",
-  mb = "24px",
   color = "var(--off-white-color)",
+  sx = {},
 }) => {
   return (
     <Typography
@@ -17,10 +14,11 @@ const SectionSubheading = ({
         fontWeight: 500,
         color: color,
         fontFamily: "AccentFont",
-        marginBottom: mb,
-        marginTop: mt,
-        marginLeft: ml,
-        marginRight: mr,
+        marginBottom: "24px",
+        marginTop: "48px",
+        marginLeft: "0px",
+        marginRight: "0px",
+        ...sx,
       }}
     >
       {text}

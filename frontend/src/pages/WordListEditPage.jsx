@@ -112,10 +112,25 @@ const WordListEditPage = () => {
         )}
       </Box>
 
-      <Box sx={{ width: "100%", marginTop: 2 }}>
-        {/* Row with languages */}
-        <Box sx={{ display: "flex", gap: 10, marginBottom: 2 }}>
-          <Box width={"50%"}>
+      <Box
+        sx={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          gap: 2,
+        }}
+      >
+        {/* Native and foreign languages */}
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            gap: "3%",
+            alignItems: "center",
+          }}
+        >
+          <Box width="50%">
             <UnderlinedTextField
               label="Native Language"
               value={nativeLanguage}
@@ -125,7 +140,7 @@ const WordListEditPage = () => {
             {validateWordListLanguage(nativeLanguage) !== "" && (
               <Typography
                 align="left"
-                width={"100%"}
+                width="100%"
                 sx={{
                   fontSize: "large",
                   color: "var(--error-color)",
@@ -136,7 +151,8 @@ const WordListEditPage = () => {
               </Typography>
             )}
           </Box>
-          <Box width={"50%"}>
+
+          <Box width="50%">
             <UnderlinedTextField
               label="Foreign Language"
               value={foreignLanguage}
@@ -146,7 +162,7 @@ const WordListEditPage = () => {
             {validateWordListLanguage(foreignLanguage) !== "" && (
               <Typography
                 align="left"
-                width={"100%"}
+                width="100%"
                 sx={{
                   fontSize: "large",
                   color: "var(--error-color)",
@@ -158,15 +174,16 @@ const WordListEditPage = () => {
             )}
           </Box>
         </Box>
+
         {/* Rows for every word pair in the list */}
         {words.map((word, index) => (
           <Box
             key={index}
             sx={{
+              width: "100%",
               display: "flex",
               alignItems: "center",
-              gap: 7,
-              marginBottom: 2,
+              gap: "3%",
               "&:hover .delete-icon": {
                 opacity: 1,
               },
@@ -188,7 +205,6 @@ const WordListEditPage = () => {
                 color: "var(--off-white-color)",
                 "&:hover": {
                   color: "var(--error-color)",
-
                   filter:
                     "drop-shadow(0 0 4px var(--error-color)) drop-shadow(0 0 16px var(--error-color))",
                 },
@@ -206,6 +222,7 @@ const WordListEditPage = () => {
           </Box>
         ))}
       </Box>
+
       {/* Plus icon to add a new list */}
       {words.length < config.wordListMaxLength && (
         <IconButton

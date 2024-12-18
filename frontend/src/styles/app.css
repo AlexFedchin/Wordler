@@ -17,3 +17,16 @@ body {
   min-height: 100vh;
   box-sizing: border-box;
 }
+
+::-webkit-selection {
+  background-color: var(--accent-color);
+  color: black;
+}
+::-moz-selection {
+  background-color: var(--accent-color);
+  color: black;
+}
+::selection {
+  background-color: var(--accent-color);
+  color: black;
+}

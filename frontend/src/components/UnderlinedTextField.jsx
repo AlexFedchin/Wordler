@@ -69,7 +69,10 @@ const UnderlinedTextField = ({
         "&:hover .MuiInput-underline:before": {
           borderBottom: "1px solid var(--darker-accent-color)",
         },
-        "& .MuiInput-underline:after": {
+        "&:hover .MuiInput-underline:after": {
+          borderBottom: "1px solid var(--accent-color)",
+        },
+        ".MuiInput-underline:after": {
           borderBottom: "1px solid var(--accent-color)",
         },
       }}
